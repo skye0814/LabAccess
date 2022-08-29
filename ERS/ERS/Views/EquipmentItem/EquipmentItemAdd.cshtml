@@ -1,0 +1,131 @@
+﻿
+@model ERSEntity.EquipmentItemEntity
+@{
+    Layout = null;
+}
+
+<div class="wrap-contact100" style="margin-top: 30px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmEquipmentItem" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Add Equipment Item
+            </span>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Category</span><span style="color:red"> *</span>
+                <div>
+                    @Html.DropDownListFor(model => model.Category, (IEnumerable<SelectListItem>
+                            )ViewBag.Category,
+                            "Select Category", new { @class = "", @id = "ddlCategory", @name = "ddlCategory" })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Item Brand</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.ItemBrand, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter item brand" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Item Brand may contain alphabet characters or a hyphen symbol<br />
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Item Model</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.ItemModel, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter item model" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Item Model may contain alphanumeric characters or a hyphen symbol<br />
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Serial Number</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.ItemSerialNumber, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter serial number" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Serial Number may contain alphanumeric characters and symbols<br />
+                        Ex: BA-123456
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Date Bought</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.DateBought, new { htmlAttributes = new { @class = "datepicker input100", @maxlength = "250", @placeholder = "Select date" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Warranty Status</span><span style="color:red"> *</span>
+                <div>
+                    @Html.DropDownListFor(model => model.WarrantyStatus, new[] { new SelectListItem { Text = "Under Warranty", Value = "true" }, new SelectListItem { Text = "Expired", Value = "false" } }, new { htmlAttributes = new { @class = "", @placeholder = "Select Warranty Status"} })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:30px;">
+                <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Submit</button>
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+</div>
+
+<div class="ViewList">
+    <br />
+    <br />
+    <h4 class="panel-title">Item List</h4>
+    <table id="tblEquipmentItemList"></table>
+    <div id="divPager"></div>
+</div>
+
+<script src="~/Scripts/Page/EquipmentItem/EquipmentItemAdd.js"></script>
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

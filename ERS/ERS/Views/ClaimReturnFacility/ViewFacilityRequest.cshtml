@@ -1,0 +1,129 @@
+﻿@model ERSEntity.RequestFacilityEntity
+@{
+    Layout = null;
+}
+<div class="wrap-contact100" style="margin-top: 30px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmViewFacilityRequest" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                View Request
+            </span>
+            @Html.HiddenFor(model => model.FacilityID)
+            @Html.HiddenFor(model => model.ClaimedTime)
+            @Html.HiddenFor(model => model.ReturnedTime)
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Request GUID</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.RequestFacilityGUID, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Requestor</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.FacilityRequestor, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Request Date</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.RequestDate, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Start Date</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">End Date</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Room Number</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.RoomNumber, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Schedule</span>
+                <input type="text" class="input100" value="@ViewBag.Schedule" readonly />
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Status</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+
+        </form>
+        <div class="form-horizontal">
+            <h4 class="panel-title">Scan the room key QR here</h4>
+            @*<div class="form-group form-fields">
+                @Html.HiddenFor(model => model.RequestID)
+                </div>*@
+            <div class="form-group form-fields">
+                <div class="form-fields">
+                    <div class="form-fields" width="400px" id="reader"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="divErrorMessage"></div>
+        <div style="text-align:center; margin-top:30px;">
+            <button id="btnClaim" class="btnAddPage" onclick="return false" title="Mark request as claimed"><i class="glyphicon glyphicon-floppy-disk"></i> Confirm</button>
+            <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Back</button>
+        </div>
+    }
+</div>
+
+
+
+<script src="~/Scripts/Page/ClaimReturnFacility/ViewFacilityRequest.js"></script>
+<style>
+    .panel-title{
+        font-family: 'Product Sans';
+        font-weight: bold;
+    }
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>
+

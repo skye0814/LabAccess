@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Equipment Usage Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var reportGenerationPageURL = "@Url.Content("~/EquipmentUsageReport/GenerateEquipmentUsage")";
+    var InventoryUsageDownloadURL = "@Url.Content("~/EquipmentUsageReport/ExportReport")";
+    var getEquipmentUsageListURL = "@Url.Content("~/EquipmentUsageReport/GetEquipmentUsageList")";
+    LoadPartial(reportGenerationPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>
+
+

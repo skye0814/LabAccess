@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Lab Personnel Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/LabPersonnelRegistration")";
+    var listPageURL = "@Url.Content("~/LabPersonnelRegistration/LabPersonnelRegistrationList")";
+    var addPageURL = "@Url.Content("~/LabPersonnelRegistration/LabPersonnelRegistrationAdd")";
+    var editPageURL = "@Url.Content("~/LabPersonnelRegistration/LabPersonnelRegistrationEdit")";
+    var getLabPersonnelListURL = "@Url.Content("~/LabPersonnelRegistration/GetLabPersonnelList")";
+    var deleteLabPersonnelURL = "@Url.Content("~/LabPersonnelRegistration/MoveLabPersonnelToArchive")";
+    var saveLabPersonnelURL = "@Url.Content("~/LabPersonnelRegistration/SaveLabPersonnelRegistration")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Session Expired";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var countdownfrom = 5;
+    var currentsecond = countdownfrom + 1;
+    $(document).ready(function () {
+        $("#LinkToLogin").click(function () {
+            window.location = window.loginPageURL;
+        });
+        countredirect();
+    });
+
+    function countredirect() {
+        $("#SessionExpiredMessage").html("");
+        $("#SessionExpiredMessage").html("<p>Page will be redirected to Login Page after " + (currentsecond - 1) + " second/s...</p>");
+        if (currentsecond != 1) {
+            currentsecond = currentsecond - 1;
+        }
+        else {
+            $("#LinkToLogin").click();
+            return;
+        }
+        setTimeout("countredirect()", 1000);
+    };
+</script>
+
+<h2>Session Expired</h2>
+<br>
+<div id="SessionExpiredMessage">
+    <p>...</p>
+</div>
+<div id="SessionExpiredMessage">
+    <a id="LinkToLogin">Click here to go to Login Page</a>
+</div>

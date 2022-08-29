@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = null;
+}
+<div id="divErrorMessage"></div>
+
+<div class="field-title" style="display: flex;">
+    <div class="title" style="flex-grow: 1;">Equipment List</div>
+    <button id="btnAddPage" class="btnAddPage" title="Add Equipment"><i class="glyphicon glyphicon-plus"></i> Add</button>
+
+</div>
+<div class="help-box">
+    <button class="accordion">Filter Search</button>
+    <div class="panel">
+        <div class="field-buttons">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <div class="wrap-input100 validate-input">
+                        <span class="label-input100">Category</span>
+                        <input type="text" id="txtCategory" class="input100" placeholder="Enter category name" autocomplete="off" />
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="wrap-input100 validate-input">
+                        <span class="label-input100">Category Code</span>
+                        <input type="text" id="txtEquipmentItemCode" class="input100" placeholder="Enter category code" autocomplete="off" />
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ViewButtons">
+                <button type="button" id="btnSearch" class="btnRed formbtn" title="Search record based on the filter provided."><i class="glyphicon glyphicon-search"></i> Search</button>&nbsp;
+                <button type="button" id="btnReset" class="btnGray formbtn" title="Clear filter value/s."><i class="fa fa-eraser"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ViewList">
+    <div class="ViewButtons">
+        
+    </div>
+    <table id="tblEquipmentItemList"></table>
+    <div id="divPager"></div>
+</div>
+
+<script src="~/Scripts/Page/EquipmentItem/EquipmentItemList.js"></script>
+<script src="~/Scripts/Page/accordion.js"></script>
+<style>
+    .grid-container {
+        grid-template-columns: auto auto auto;
+    }
+
+    .grid-item {
+        text-align: left;
+    }
+
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+
+        .grid-container {
+            grid-template-columns: auto auto;
+        }
+
+        .wrap-input100 {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        font-size: 60px;
+        color: var(--primary-color);
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+        margin-top: 0 !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>
+

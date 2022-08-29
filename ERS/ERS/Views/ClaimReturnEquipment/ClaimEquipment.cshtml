@@ -1,0 +1,28 @@
+﻿@model ERSEntity.RequestEquipmentEntity
+@{
+    Layout = null;
+}
+<div id="divErrorMessage"></div>
+<div class="AddForm">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmStudentRegistration" }))
+    {
+        <div class="form-horizontal">
+            <h4 class="panel-title">Claim Equipment</h4>
+            @Html.HiddenFor(model => model.RequestID)
+            <div class="form-group form-fields">
+                <div class="form-fields">
+                    <div class="col-md-1 col-label">
+                        <button type="button" id="btnScan" class="btnGray formbtn" title="Scan QR Code"><i class="glyphicon glyphicon-chevron-left"></i> Scan</button>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <button type="button" id="btnReturnList" class="btnGray formbtn" title="Return to previous page."><i class="glyphicon glyphicon-chevron-left"></i> Back</button>
+            </div>
+        </div>
+    }
+</div>
+<script src="~/Scripts/Page/ClaimReturnEquipment/ClaimEquipment.js"></script>

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Lab Personnel Archive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/LabPersonnelArchive")";
+    var listPageURL = "@Url.Content("~/LabPersonnelArchive/LabPersonnelArchiveList")";
+    var editPageURL = "@Url.Content("~/LabPersonnelArchive/LabPersonnelArchiveEdit")";
+    var getLabPersonnelListURL = "@Url.Content("~/LabPersonnelRegistration/GetLabPersonnelList")";
+    var saveLabPersonnelURL = "@Url.Content("~/LabPersonnelRegistration/SaveLabPersonnelRegistration")";
+    var deleteLabPersonnelURL = "@Url.Content("~/LabPersonnelArchive/LabPersonnelArchiveDelete")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>

@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="AddForm">
+    <div class="form-horizontal">
+        <h4 class="panel-title">About</h4>
+
+        <div class="form-group form-fields">
+            <div class="form-horizontal">
+                @{
+                    H2Pay_Entities.SystemUserEntity objSystemUserEntities = (H2Pay_Entities.SystemUserEntity)Session["SystemUser"];
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.OrganizationVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Organization</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.OrganizationVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.ESSVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>ESS</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.ESSVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.ManpowerVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Manpower Requisition</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.ManpowerVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.RecruitmentVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Recruitment</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.RecruitmentVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.OnboardingVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Onboarding</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.OnboardingVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.TKVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Time Keeping</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.TKVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.LeaveMngmntVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Leave Management</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.LeaveMngmntVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.PayrollVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>PAYROLL</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.PayrollVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.PerformanceVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Performance Management</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.PerformanceVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    if (!string.IsNullOrEmpty(objSystemUserEntities.ExitMngmntVersion))
+                    {
+                        <div class="field-content">
+                            <div class="form-horizontal">
+                                <h4>Exit Management</h4>
+                                <div class="form-group">
+                                    <div class="col-md-1 col-label">
+                                        <label class="control-label">Current Version: </label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label">@objSystemUserEntities.ExitMngmntVersion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+                <div class="field-buttons">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

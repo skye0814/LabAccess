@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+    var keybytes = System.Configuration.ConfigurationManager.AppSettings["keybytes"];
+    var ivbytes = System.Configuration.ConfigurationManager.AppSettings["ivbytes"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to LabAccess</title>
+
+    @*<link rel="stylesheet" href="~/content/css/css-login/owl.carousel.min.css">*@
+
+    <!-- Bootstrap CSS -->
+    @*<link rel="stylesheet" href="~/Content/CSS/css-login/bootstrap/bootstrap.css">*@
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />*@
+    <!--<link href="~/content/bootstrap.css" rel="stylesheet" />-->
+    <link href="~/Content/CSS/login.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/Content/CSS/Virtual-Keyboard.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Content/CSS/css-login/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Scripts/respond.min.js"></script>
+    <script src="~/Scripts/anseki-jquery-plainoverlay/jquery.plainoverlay.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/aes.js"></script>
+    <script src="~/Scripts/Page/Common.js"></script>
+    <script>
+       var landingPageURL = "@Url.Content("~/")";
+        var validateCredentialsURL = "@Url.Content("~/Login/ValidateCredentials")";
+        var keybytes = "@keybytes";
+        var ivbytes = "@ivbytes";
+
+        $(function () {
+
+            $("#showPass").change(function () {
+                var checked = $(this).is(":checked");
+                if (checked) {
+                    $("#txtPassword").attr("type", "text");
+                } else {
+                    $("#txtPassword").attr("type", "password");
+                }
+            });
+
+        });
+    </script>
+    <script src="~/Scripts/Page/Login/Login.js"></script>
+    <style>
+        #divErrorMessage {
+            color: red;
+            font-size: 12px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    @model ERSEntity.SystemUserEntity
+    <div class="parent-container">
+        <img src="~/Content/Images/CPE-logo.png" class="cpe-logo"/>
+        <div class="img-container">
+
+        </div>
+
+        <div class="container-container">
+            <div class="container">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { action = "", id = "frmLogin" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <form>
+                        <div class="title" style="width: 150px; margin: 0 auto;">
+                            <p style="text-align: center">Login to <span style="font-weight: bold;">CPE LabAccess</span></p>
+                        </div>
+                        <input class="inputField use-keyboard-input" placeholder="Username or Student ID" id="txtUsername"><br>
+                        <input class="inputField use-keyboard-input" type="password" placeholder="Password" id="txtPassword"><br>
+                        @*<i class="bi bi-eye-slash" id="showPass"></i> <br>*@
+                        @*<input type="checkbox" id="showPass" /><span>Show password</span><br>*@
+                        <div id="divErrorMessage"></div>
+                        <input class="inputField" type="submit" value="SIGN IN" id="btnLogin"><br />
+                        <a href="~/ForgotPassword/Index" style="color: var(--primary-color); font-size: 12px; text-decoration: none">Forgot Password?</a>
+                    </form>
+                }
+                <div class="drops">
+                    <div class="drop drop-1"></div>
+                    <div class="drop drop-2"></div>
+                    <div class="drop drop-3"></div>
+                    <div class="drop drop-4"></div>
+                    <div class="drop drop-5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Comfirmation Modal *@
+    <div id="divModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div id="divHeaderModal" class="modal-header"></div>
+                <div id="divBodyModal" class="modal-body"></div>
+                <div id="divFooterModal" class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    @* End of Comfirmation Modal *@
+
+    <script src="~/Scripts/Virtual-Keyboard.js"></script>
+</body>
+</html>

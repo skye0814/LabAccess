@@ -1,0 +1,159 @@
+﻿
+@model ERSEntity.PenaltyEntity
+@{
+    Layout = null;
+}
+@{
+    ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+}
+
+<div class="wrap-contact100" style="margin-top: 30px">
+
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmPenalty" }))
+    {
+
+
+        @Html.AntiForgeryToken()
+
+        if (objSystemUser.isLabPersonnel)
+        {
+            <form class="contact100-form">
+                <span class="contact100-form-title" style="text-transform: uppercase">
+                    Edit User Penalty
+                </span>
+                @Html.HiddenFor(model => model.PenaltyID)
+                <div class="wrap-input100 input100-select">
+                    <span class="label-input100">Active / Inactive</span>
+                    <div>
+                        @Html.DropDownListFor(model => model.isActive, new[] { new SelectListItem { Text = "Active", Value = "true" },
+                       new SelectListItem { Text = "Inactive", Value = "false" } })
+                    </div>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Requestor Name</span>
+                    @Html.EditorFor(model => model.Requestor, new { htmlAttributes = new { @class = "input100", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Request Type</span>
+                    @Html.EditorFor(model => model.RequestType, new { htmlAttributes = new { @class = "input100", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Request GUID</span>
+                    @Html.EditorFor(model => model.RequestGUID, new { htmlAttributes = new { @class = "input100", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Penalty Details</span>
+                    @Html.EditorFor(model => model.PenaltyDetails, new { htmlAttributes = new { @class = "input100", @placeholder = "Write penalty details here..." } })
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div id="divErrorMessage"></div>
+                <div style="text-align:center; margin-top:60px;">
+                    <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Update</button>
+                    <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form class="contact100-form">
+                <span class="contact100-form-title" style="text-transform: uppercase">
+                    View Penalty
+                </span>
+                @Html.HiddenFor(model => model.PenaltyID)
+                <div class="wrap-input100 input100-select">
+                    <span class="label-input100">Active / Inactive</span>
+                    <div>
+                        @Html.DropDownListFor(model => model.isActive, new[] { new SelectListItem { Text = "Active", Value = "true" },
+                       new SelectListItem { Text = "Inactive", Value = "false" } }, new { htmlAttributes = new { @readonly = "readonly", @disabled = "disabled" } })
+                    </div>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Requestor Name</span>
+                    @Html.EditorFor(model => model.Requestor, new { htmlAttributes = new { @class = "input100", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Request Type</span>
+                    @Html.EditorFor(model => model.RequestType, new { htmlAttributes = new { @class = "input100", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Request GUID</span>
+                    @Html.EditorFor(model => model.RequestGUID, new { htmlAttributes = new { @class = "input100", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <span class="label-input100">Penalty Details</span>
+                    @Html.EditorFor(model => model.PenaltyDetails, new { htmlAttributes = new { @class = "input100", @placeholder = "No penalty details...", @readonly = "readonly" } })
+                    <span class="focus-input100"></span>
+                </div>
+
+                <div id="divErrorMessage"></div>
+                <div style="text-align:center; margin-top:60px;">
+                    <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+                </div>
+            </form>
+        }
+
+    }
+</div>
+
+<script src="~/Scripts/Page/Penalty/PenaltyAdd.js"></script>
+<style>
+    .qrcode-popout .ui-dialog-titlebar-close {
+        display: none
+    }
+
+    .qrcode-popout {
+        margin: 0 auto;
+    }
+
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

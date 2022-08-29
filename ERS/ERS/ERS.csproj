@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2C7C58A6-A105-4660-9AF7-27D6A460629F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ERS</RootNamespace>
+    <AssemblyName>ERS</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44395</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1484.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1484.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1484.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1484.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1484.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1484.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.4.3.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.4.3\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChangePasswordController.cs" />
+    <Compile Include="Controllers\ClaimReturnEquipmentController.cs" />
+    <Compile Include="Controllers\ClaimReturnFacilityController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\ForgotPasswordController.cs" />
+    <Compile Include="Controllers\TransactionReportController.cs" />
+    <Compile Include="Controllers\StudentUsageReportController.cs" />
+    <Compile Include="Controllers\FacilityUsageReportController.cs" />
+    <Compile Include="Controllers\FacilityRequestHistoryController.cs" />
+    <Compile Include="Controllers\LabPersonnelArchiveController.cs" />
+    <Compile Include="Controllers\PenaltyController.cs" />
+    <Compile Include="Controllers\EquipmentCategoryController.cs" />
+    <Compile Include="Controllers\EquipmentCategoryReportController.cs" />
+    <Compile Include="Controllers\EquipmentItemController.cs" />
+    <Compile Include="Controllers\EquipmentRequestHistoryController.cs" />
+    <Compile Include="Controllers\EquipmentUsageReportController.cs" />
+    <Compile Include="Controllers\FacilityController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RequestEquipmentController.cs" />
+    <Compile Include="Controllers\LabPersonnelRegistrationController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RequestFacilityController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\StudentRegistrationController.cs" />
+    <Compile Include="Controllers\StudentsArchiveController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CSS\css-login\bootstrap.min.css" />
+    <Content Include="Content\CSS\css-login\bootstrap\bootstrap.css" />
+    <Content Include="Content\CSS\css-login\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\CSS\css-login\owl.carousel.min.css" />
+    <Content Include="Content\CSS\css-login\style.css" />
+    <Content Include="Content\CSS\datatables.min.css" />
+    <Content Include="Content\CSS\datetimepicker\bootstrap-datetimepicker.css" />
+    <Content Include="Content\CSS\datetimepicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\CSS\datetimepicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\CSS\font-awesome.css" />
+    <Content Include="Content\CSS\font-awesome.min.css" />
+    <Content Include="Content\CSS\ers.css" />
+    <Content Include="Content\CSS\jqGrid.modified.css" />
+    <Content Include="Content\CSS\ers-new.css" />
+    <Content Include="Content\CSS\login.css" />
+    <Content Include="Content\CSS\Virtual-Keyboard.css" />
+    <Content Include="Content\emailtemplate.html" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Images\afternoon.png" />
+    <Content Include="Content\Images\bg_1.jpg" />
+    <Content Include="Content\Images\CPE-logo.png" />
+    <Content Include="Content\Images\crescent-moon.png" />
+    <Content Include="Content\Images\emptyrecord.png" />
+    <Content Include="Content\Images\loginbackground.jpg" />
+    <Content Include="Content\Images\login_bg.jfif" />
+    <Content Include="Content\Images\logo %281%29.png" />
+    <Content Include="Content\Images\logo.jpg" />
+    <Content Include="Content\Images\Rooms\CEA 300.jpg" />
+    <Content Include="Content\Images\Rooms\CEA 302.jpg" />
+    <Content Include="Content\Images\Rooms\CEA 311.jpg" />
+    <Content Include="Content\Images\Rooms\CEA 312.jpg" />
+    <Content Include="Content\Images\Rooms\CEA 313.jpg" />
+    <Content Include="Content\Images\spinner.svg" />
+    <Content Include="Content\Images\Step 1.png" />
+    <Content Include="Content\Images\Step 2.png" />
+    <Content Include="Content\Images\Step 3.png" />
+    <Content Include="Content\Images\Step 4.png" />
+    <Content Include="Content\Images\Step 5.png" />
+    <Content Include="Content\Images\sunrise.png" />
+    <Content Include="Content\Images\toggle-down.png" />
+    <Content Include="Content\Images\toggle-up.png" />
+    <Content Include="Content\jqGrid.Custom.css" />
+    <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
+    <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
+    <Content Include="Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.menu.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Content\themes\default-dark\32px.png" />
+    <Content Include="Content\themes\default-dark\40px.png" />
+    <Content Include="Content\themes\default-dark\style.css" />
+    <Content Include="Content\themes\default-dark\style.min.css" />
+    <Content Include="Content\themes\default-dark\throbber.gif" />
+    <Content Include="Content\themes\default\32px.png" />
+    <Content Include="Content\themes\default\40px.png" />
+    <Content Include="Content\themes\default\style.css" />
+    <Content Include="Content\themes\default\style.min.css" />
+    <Content Include="Content\themes\default\throbber.gif" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\additional-methods.js" />
+    <Content Include="Scripts\additional-methods.min.js" />
+    <Content Include="Scripts\aes.js" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\jquery.plainoverlay.js" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\jquery.plainoverlay.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\bower.json" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\LICENSE-MIT" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\package.json" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\plainoverlay.jquery.json" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\README.md" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\sass\progress.scss" />
+    <Content Include="Scripts\anseki-jquery-plainoverlay\sass\_animation.scss" />
+    <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\Page\accordion.js" />
+    <Content Include="Scripts\Page\ForgotPassword\ForgotPassword.js" />
+    <Content Include="Scripts\Page\ForgotPassword\ResetPassword.js" />
+    <Content Include="Scripts\Page\Home\Home.js" />
+    <Content Include="Scripts\Page\TransactionReport\GenerateReport.js" />
+    <Content Include="Scripts\Page\StudentUsageReport\GenerateReport.js" />
+    <Content Include="Scripts\Page\FacilityUsageReport\GenerateReport.js" />
+    <Content Include="Scripts\Page\FacilityRequestHistory\FacilityRequestHistoryList.js" />
+    <Content Include="Scripts\Page\LabPersonnelArchive\LabPersonnelArchiveList.js" />
+    <Content Include="Scripts\Page\Penalty\PenaltyAdd.js" />
+    <Content Include="Scripts\Page\Penalty\PenaltyEdit.js" />
+    <Content Include="Scripts\Page\Penalty\PenaltyList.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\Page\ChangePassword\ChangePassword.js" />
+    <Content Include="Scripts\Page\ClaimReturnEquipment\ClaimEquipment.js" />
+    <Content Include="Scripts\Page\ClaimReturnEquipment\ClaimReturnEquipmentList.js" />
+    <Content Include="Scripts\Page\ClaimReturnEquipment\ItemQRCodeScanner.js" />
+    <Content Include="Scripts\Page\ClaimReturnEquipment\ViewEquipmentRequest.js" />
+    <Content Include="Scripts\Page\ClaimReturnEquipment\EquipmentQRCodeScanner.js" />
+    <Content Include="Scripts\Page\ClaimReturnFacility\ClaimReturnFacilityList.js" />
+    <Content Include="Scripts\Page\ClaimReturnFacility\FacilityQRCodeScanner.js" />
+    <Content Include="Scripts\Page\ClaimReturnFacility\ViewFacilityRequest.js" />
+    <Content Include="Scripts\Page\Common.js" />
+    <Content Include="Scripts\Page\EquipmentCategory\EquipmentCategoryEdit.js" />
+    <Content Include="Scripts\Page\EquipmentCategory\EquipmentCategoryAdd.js" />
+    <Content Include="Scripts\Page\EquipmentCategory\EquipmentCategoryList.js" />
+    <Content Include="Scripts\Page\EquipmentCategoryReport\GenerateReport.js" />
+    <Content Include="Scripts\Page\EquipmentItem\EquipmentItemAdd.js" />
+    <Content Include="Scripts\Page\EquipmentItem\EquipmentItemEdit.js" />
+    <Content Include="Scripts\Page\EquipmentItem\EquipmentItemList.js" />
+    <Content Include="Scripts\Page\EquipmentRequestHistory\EquipmentRequestHistoryList.js" />
+    <Content Include="Scripts\Page\EquipmentUsageReport\GenerateReport.js" />
+    <Content Include="Scripts\Page\ers.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <Content Include="Content\CSS\css-login\bootstrap.min.css.map" />
+    <Content Include="Files\Forms\StudentRegistration\StudentRegistration.xlsx" />
+    <Content Include="Files\Uploads\StudentRegistration\STUDENTREGISTRATION20220325212132C880_StudentRegistration.xlsx" />
+    <Content Include="Files\Uploads\StudentRegistration\STUDENTREGISTRATION2022032521260892ED_StudentRegistration.xlsx" />
+    <Content Include="Files\Uploads\StudentRegistration\STUDENTREGISTRATION20220325212621309B_StudentRegistration.xlsx" />
+    <Content Include="Files\Uploads\StudentRegistration\STUDENTREGISTRATION202206242015294E7C_StudentRegistration.xlsx" />
+    <None Include="Properties\PublishProfiles\CpELabAccess - Web Deploy.pubxml" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\i18n\grid.locale-ar.js" />
+    <Content Include="Scripts\i18n\grid.locale-bg.js" />
+    <Content Include="Scripts\i18n\grid.locale-bg1251.js" />
+    <Content Include="Scripts\i18n\grid.locale-cat.js" />
+    <Content Include="Scripts\i18n\grid.locale-cn.js" />
+    <Content Include="Scripts\i18n\grid.locale-cs.js" />
+    <Content Include="Scripts\i18n\grid.locale-da.js" />
+    <Content Include="Scripts\i18n\grid.locale-de.js" />
+    <Content Include="Scripts\i18n\grid.locale-dk.js" />
+    <Content Include="Scripts\i18n\grid.locale-el.js" />
+    <Content Include="Scripts\i18n\grid.locale-en.js" />
+    <Content Include="Scripts\i18n\grid.locale-es.js" />
+    <Content Include="Scripts\i18n\grid.locale-fa.js" />
+    <Content Include="Scripts\i18n\grid.locale-fi.js" />
+    <Content Include="Scripts\i18n\grid.locale-fr.js" />
+    <Content Include="Scripts\i18n\grid.locale-gl.js" />
+    <Content Include="Scripts\i18n\grid.locale-he.js" />
+    <Content Include="Scripts\i18n\grid.locale-hr.js" />
+    <Content Include="Scripts\i18n\grid.locale-hr1250.js" />
+    <Content Include="Scripts\i18n\grid.locale-hu.js" />
+    <Content Include="Scripts\i18n\grid.locale-id.js" />
+    <Content Include="Scripts\i18n\grid.locale-is.js" />
+    <Content Include="Scripts\i18n\grid.locale-it.js" />
+    <Content Include="Scripts\i18n\grid.locale-ja.js" />
+    <Content Include="Scripts\i18n\grid.locale-kr.js" />
+    <Content Include="Scripts\i18n\grid.locale-lt.js" />
+    <Content Include="Scripts\i18n\grid.locale-mne.js" />
+    <Content Include="Scripts\i18n\grid.locale-nl.js" />
+    <Content Include="Scripts\i18n\grid.locale-no.js" />
+    <Content Include="Scripts\i18n\grid.locale-pl.js" />
+    <Content Include="Scripts\i18n\grid.locale-pt-br.js" />
+    <Content Include="Scripts\i18n\grid.locale-pt.js" />
+    <Content Include="Scripts\i18n\grid.locale-ro.js" />
+    <Content Include="Scripts\i18n\grid.locale-ru.js" />
+    <Content Include="Scripts\i18n\grid.locale-sk.js" />
+    <Content Include="Scripts\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Scripts\i18n\grid.locale-sr.js" />
+    <Content Include="Scripts\i18n\grid.locale-sv.js" />
+    <Content Include="Scripts\i18n\grid.locale-th.js" />
+    <Content Include="Scripts\i18n\grid.locale-tr.js" />
+    <Content Include="Scripts\i18n\grid.locale-tw.js" />
+    <Content Include="Scripts\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\i18n\grid.locale-vi.js" />
+    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.0.js" />
+    <Content Include="Scripts\jquery-ui-1.10.0.min.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Scripts\jquery-ui-1.13.0\package.json" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.13.0\AUTHORS.txt" />
+    <Content Include="Scripts\jquery-ui-1.13.0\external\jquery\jquery.js" />
+    <Content Include="Scripts\jquery-ui-1.13.0\images\ui-icons_444444_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.13.0\images\ui-icons_555555_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.13.0\images\ui-icons_777620_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.13.0\images\ui-icons_777777_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.13.0\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.13.0\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery-ui-1.13.0\index.html" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery-ui-1.13.0\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery-ui-1.13.0\LICENSE.txt" />
+    <Content Include="Scripts\jquery.jqGrid.js" />
+    <Content Include="Scripts\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\jquery.jqGrid.src.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\Page\ERSFormatting.js" />
+    <Content Include="Scripts\Page\ERSMessages.js" />
+    <Content Include="Scripts\Page\Facility\FacilityEdit.js" />
+    <Content Include="Scripts\Page\Facility\FacilityAdd.js" />
+    <Content Include="Scripts\Page\Facility\FacilityList.js" />
+    <Content Include="Scripts\Page\LabPersonnelRegistration\LabPersonnelRegistrationAdd.js" />
+    <Content Include="Scripts\Page\LabPersonnelRegistration\LabPersonnelRegistrationList.js" />
+    <Content Include="Scripts\Page\LabPersonnelRegistration\LabPersonnelRegistrationEdit.js" />
+    <Content Include="Scripts\Page\Login\Login.js" />
+    <Content Include="Scripts\Page\RequestEquipment\jsRequestsAdd.js" />
+    <Content Include="Scripts\Page\RequestEquipment\jsRequestsEdit.js" />
+    <Content Include="Scripts\Page\RequestEquipment\RequestEquipmentAdd.js" />
+    <Content Include="Scripts\Page\RequestEquipment\RequestEquipmentEdit.js" />
+    <Content Include="Scripts\Page\RequestEquipment\RequestEquipmentList.js" />
+    <Content Include="Scripts\Page\RequestFacility\RequestFacilityAdd.js" />
+    <Content Include="Scripts\Page\RequestFacility\RequestFacilityEdit.js" />
+    <Content Include="Scripts\Page\RequestFacility\RequestFacilityList.js" />
+    <Content Include="Scripts\Page\StudentRegistration\StudentRegistrationAdd.js" />
+    <Content Include="Scripts\Page\StudentRegistration\StudentRegistrationEdit.js" />
+    <Content Include="Scripts\Page\StudentRegistration\StudentRegistrationList.js" />
+    <Content Include="Scripts\Page\StudentsArchive\StudentsArchiveList.js" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\jquery.plainoverlay.js" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\jquery.plainoverlay.min.js" />
+    <Content Include="Scripts\Plugins\FlipClock\flipclock.js" />
+    <Content Include="Scripts\Plugins\FlipClock\flipclock.min.js" />
+    <Content Include="Scripts\Plugins\Lobibox\lobibox.js" />
+    <Content Include="Scripts\Plugins\Lobibox\lobibox.min.js" />
+    <Content Include="Scripts\Plugins\QRCode\html5-qrcode.min_.js" />
+    <Content Include="Scripts\Plugins\timetable.js-master\scripts\timetable.js" />
+    <Content Include="Scripts\Plugins\timetable.js-master\styles\demo.css" />
+    <Content Include="Scripts\Plugins\timetable.js-master\styles\timetablejs.css" />
+    <Content Include="Scripts\preloader.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\bower.json" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\LICENSE-MIT" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\package.json" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\plainoverlay.jquery.json" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\README.md" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\sass\progress.scss" />
+    <Content Include="Scripts\Plugins\anseki-jquery-plainoverlay\sass\_animation.scss" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\Virtual-Keyboard.js" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\StudentRegistration\StudentRegistrationList.cshtml" />
+    <Content Include="Views\StudentRegistration\StudentRegistrationAdd.cshtml" />
+    <Content Include="Views\StudentRegistration\StudentRegistrationEdit.cshtml" />
+    <Content Include="Views\LabPersonnelRegistration\Index.cshtml" />
+    <Content Include="Views\LabPersonnelRegistration\LabPersonnelRegistrationAdd.cshtml" />
+    <Content Include="Views\StudentRegistration\Index.cshtml" />
+    <Content Include="Views\LabPersonnelRegistration\LabPersonnelRegistrationList.cshtml" />
+    <Content Include="Views\EquipmentItem\EquipmentItemEdit.cshtml" />
+    <Content Include="Views\EquipmentItem\EquipmentItemList.cshtml" />
+    <Content Include="Views\EquipmentItem\Index.cshtml" />
+    <Content Include="Views\Facility\FacilityAdd.cshtml" />
+    <Content Include="Views\Facility\FacilityEdit.cshtml" />
+    <Content Include="Views\Facility\FacilityList.cshtml" />
+    <Content Include="Views\Facility\Index.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Views\ChangePassword\Index.cshtml" />
+    <Content Include="Views\ChangePassword\ChangePassword.cshtml" />
+    <Content Include="Views\LabPersonnelRegistration\LabPersonnelRegistrationEdit.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\Index.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\ClaimReturnEquipmentList.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\ClaimEquipment.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\ReturnEquipment.cshtml" />
+    <Content Include="Views\RequestEquipment\Index.cshtml" />
+    <Content Include="Views\RequestEquipment\RequestEquipmentAdd.cshtml" />
+    <Content Include="Views\RequestEquipment\RequestEquipmentEdit.cshtml" />
+    <Content Include="Views\RequestEquipment\RequestEquipmentList.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\EquipmentQRCodeScanner.cshtml" />
+    <Content Include="Views\EquipmentCategory\EquipmentCategoryAdd.cshtml" />
+    <Content Include="Views\EquipmentCategory\EquipmentCategoryEdit.cshtml" />
+    <Content Include="Views\EquipmentCategory\EquipmentCategoryList.cshtml" />
+    <Content Include="Views\EquipmentCategory\Index.cshtml" />
+    <Content Include="Views\EquipmentItem\EquipmentItemAdd.cshtml" />
+    <Content Include="Views\RequestFacility\Index.cshtml" />
+    <Content Include="Views\RequestFacility\RequestFacilityAdd.cshtml" />
+    <Content Include="Views\RequestFacility\RequestFacilityEdit.cshtml" />
+    <Content Include="Views\RequestFacility\RequestFacilityList.cshtml" />
+    <Content Include="Views\EquipmentCategoryReport\Index.cshtml" />
+    <Content Include="Views\EquipmentCategoryReport\GenerateEquipmentCategory.cshtml" />
+    <Content Include="Views\EquipmentUsageReport\Index.cshtml" />
+    <Content Include="Views\EquipmentUsageReport\GenerateEquipmentUsage.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\ViewEquipmentRequest.cshtml" />
+    <Content Include="Views\ClaimReturnEquipment\ItemQRCodeScanner.cshtml" />
+    <Content Include="Views\EquipmentRequestHistory\EquipmentRequestHistoryList.cshtml" />
+    <Content Include="Views\EquipmentRequestHistory\Index.cshtml" />
+    <Content Include="Views\ClaimReturnFacility\ClaimReturnFacilityList.cshtml" />
+    <Content Include="Views\ClaimReturnFacility\FacilityQRCodeScanner.cshtml" />
+    <Content Include="Views\ClaimReturnFacility\Index.cshtml" />
+    <Content Include="Views\ClaimReturnFacility\ViewFacilityRequest.cshtml" />
+    <Content Include="Views\Penalty\PenaltyAdd.cshtml" />
+    <Content Include="Views\Penalty\PenaltyEdit.cshtml" />
+    <Content Include="Views\Penalty\PenaltyList.cshtml" />
+    <Content Include="Views\Penalty\Index.cshtml" />
+    <Content Include="Views\StudentsArchive\Index.cshtml" />
+    <Content Include="Views\StudentsArchive\StudentsArchiveList.cshtml" />
+    <Content Include="Views\StudentsArchive\StudentsArchiveEdit.cshtml" />
+    <Content Include="Views\LabPersonnelArchive\Index.cshtml" />
+    <Content Include="Views\LabPersonnelArchive\LabPersonnelArchiveList.cshtml" />
+    <Content Include="Views\LabPersonnelArchive\LabPersonnelArchiveEdit.cshtml" />
+    <Content Include="Views\FacilityRequestHistory\Index.cshtml" />
+    <Content Include="Views\FacilityRequestHistory\FacilityRequestHistoryList.cshtml" />
+    <Content Include="Views\FacilityUsageReport\GenerateFacilityUsage.cshtml" />
+    <Content Include="Views\FacilityUsageReport\Index.cshtml" />
+    <Content Include="Views\StudentUsageReport\GenerateStudentUsage.cshtml" />
+    <Content Include="Views\StudentUsageReport\Index.cshtml" />
+    <Content Include="Views\TransactionReport\GenerateTransaction.cshtml" />
+    <Content Include="Views\TransactionReport\Index.cshtml" />
+    <Content Include="Views\ForgotPassword\Index.cshtml" />
+    <Content Include="Views\ForgotPassword\ResetPassword.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Scripts\Page\Main\" />
+    <Folder Include="Views\Common\" />
+    <Folder Include="Views\Security\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ERSBLL\ERSBLL.csproj">
+      <Project>{855ee0bb-6ae8-47c4-80ae-d2086e9f9673}</Project>
+      <Name>ERSBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ERSDAL\ERSDAL.csproj">
+      <Project>{7cbd083b-af04-459b-a74c-b5668b0031ff}</Project>
+      <Name>ERSDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ERSEntity\ERSEntity.csproj">
+      <Project>{9abb5d94-d46b-41fe-985b-4e6945d035fe}</Project>
+      <Name>ERSEntity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ERSUtil\ERSUtil.csproj">
+      <Project>{b9835a28-1ea4-4837-98e6-8b69d8e630c0}</Project>
+      <Name>ERSUtil</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\EquipmentCategoryReport.rdlc" />
+    <EmbeddedResource Include="Reports\FacilityUsageReport.rdlc" />
+    <EmbeddedResource Include="Reports\InventoryUsageReport-orig.rdlc" />
+    <EmbeddedResource Include="Reports\InventoryUsageReport.rdlc" />
+    <EmbeddedResource Include="Reports\StudentUsageReport.rdlc" />
+    <EmbeddedResource Include="Reports\TransactionReport.rdlc" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>63198</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44395/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

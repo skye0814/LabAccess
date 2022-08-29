@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Equipment Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var listPageURL = "@Url.Content("~/EquipmentCategory/EquipmentCategoryList")";
+    var addPageURL = "@Url.Content("~/EquipmentCategory/EquipmentCategoryAdd")";
+    var editPageURL = "@Url.Content("~/EquipmentCategory/EquipmentCategoryEdit")";
+    var editItemPageURL = "@Url.Content("~/EquipmentCategoryItem/EquipmentCategoryItemEdit")";
+    var getEquipmentCategoryListURL = "@Url.Content("~/EquipmentCategory/GetEquipmentCategoryList")";
+    var getEquipmentItemListURL = "@Url.Content("~/EquipmentItem/GetEquipmentItemList")";
+    var deleteEquipmentCategoryURL = "@Url.Content("~/EquipmentCategory/DeleteEquipmentCategory")";
+    var saveEquipmentCategoryURL = "@Url.Content("~/EquipmentCategory/SaveEquipmentCategory")";
+    var saveEquipmentCategoryItemURL = "@Url.Content("~/EquipmentCategoryItem/SaveEquipmentCategoryItem")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+ 
+</div>
+
+

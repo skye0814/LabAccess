@@ -1,0 +1,102 @@
+﻿@{
+    Layout = null;
+}
+<div id="divErrorMessage"></div>
+
+<div class="field-title" style="display: flex;">
+    <div class="title" style="flex-grow: 1;">Student Usage Report</div>
+    
+
+</div>
+<div class="help-box">
+    <button class="accordion">Generate Report</button>
+    <div class="panel">
+        <div class="field-buttons">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <div class="wrap-input100 validate-input">
+                        <span class="label-input100">Borrowed Date From</span>
+                        <input type="text" id="dpDateFrom" class="input100" placeholder="Select date" autocomplete="off" />
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="wrap-input100 validate-input">
+                        <span class="label-input100">Borrowed Date To</span>
+                        <input type="text" id="dpDateTo" class="input100" placeholder="Select date" autocomplete="off" />
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ViewButtons">
+                <button type="button" id="btnGenerate" class="btnAddPage" title="Search record based on the filter provided."><i class="glyphicon glyphicon-save"></i> Generate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ViewList">
+    <table id="tblStudentUsageList"></table>
+    <div id="divPager"></div>
+</div>
+<script src="~/Scripts/Page/StudentUsageReport/GenerateReport.js"></script>
+<script src="~/Scripts/Page/accordion.js"></script>
+<style>
+    .grid-container {
+        grid-template-columns: auto auto auto;
+    }
+
+    .grid-item {
+        text-align: left;
+    }
+
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+
+        .grid-container {
+            grid-template-columns: auto auto;
+        }
+
+        .wrap-input100 {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        font-size: 60px;
+        color: var(--primary-color);
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+        margin-top: 0 !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

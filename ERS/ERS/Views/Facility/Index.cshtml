@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Facility";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var listPageURL = "@Url.Content("~/Facility/FacilityList")";
+    var addPageURL = "@Url.Content("~/Facility/FacilityAdd")";
+    var editPageURL = "@Url.Content("~/Facility/FacilityEdit")";
+    var getFacilityListURL = "@Url.Content("~/Facility/GetFacilityList")";
+    var deleteFacilityURL = "@Url.Content("~/Facility/DeleteFacility")";
+    var saveFacilityURL = "@Url.Content("~/Facility/SaveFacility")";
+    var generateQRCodeURL = "@Url.Content("~/Facility/GenerateFacilityQRCode")";
+    var addScheduleURL = "@Url.Content("~/Facility/AddSchedule")";
+    var getScheduleListURL = "@Url.Content("~/Facility/GetScheduleList")";
+    var deleteScheduleURL = "@Url.Content("~/Facility/DeleteSchedule")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+ 
+</div>
+
+

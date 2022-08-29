@@ -1,0 +1,126 @@
+﻿@model ERSEntity.RequestsEntity
+@{
+    Layout = null;
+}
+<div id="divErrorMessage"></div>
+
+<div class="field-title" style="display: flex;">
+    <div class="title" style="flex-grow: 1;">Claim and Return Equipment</div>
+    <button type="button" id="btnScan" class="btnAddPage" title="Scan QR"><i class="bx bx-qr"></i> Scan</button>
+</div>
+<div class="help-box">
+    <button class="accordion">Filter Search</button>
+    <div class="panel">
+        <div class="field-buttons">
+            <div class="grid-container">
+                <div class="grid-item">
+                    <div class="wrap-input200 validate-input">
+                        <span class="label-input100">Requestor</span>
+                        <input type="text" id="txtRequestor" class="input100" placeholder="Enter requestor name" autocomplete="off" />
+                        <span class="label-input100">Request GUID</span>
+                        <input type="text" id="txtRequestGuid" class="input100" placeholder="Enter requestGUID" autocomplete="off" />
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+                <div class="grid-item">
+                    <div class="wrap-input100 input100-select">
+                        <span class="label-input100">Status</span>
+                        <div>
+                            @Html.DropDownListFor(model => model.Status, (IEnumerable<SelectListItem>
+                            )ViewBag.statusViewBag,
+                            "Select Status", new { @class = "", @id = "ddlStatus", @name = "ddlStatus" })
+                        </div>
+                        <span class="focus-input100"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ViewButtons">
+                <button type="button" id="btnSearch" class="btnRed formbtn" title="Search record based on the filter provided."><i class="glyphicon glyphicon-search"></i> Search</button>&nbsp;
+                <button type="button" id="btnReset" class="btnGray formbtn" title="Clear filter value/s."><i class="fa fa-eraser"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ViewList">
+    <div class="ViewButtons">
+    </div>
+    <table id="tblRequestEquipmentList"></table>
+    <div id="divPager"></div>
+</div>
+
+<div class="empty-record-div">
+    <img src="~/Content/Images/emptyrecord.png" class="empty-record-image" />
+    <p class="empty-record-message">There are no requests.<br />Student requests will show here.</p>
+</div>
+
+<script src="~/Scripts/Page/ClaimReturnEquipment/ClaimReturnEquipmentList.js"></script>
+<script src="~/Scripts/Page/accordion.js"></script>
+<style>
+    .grid-container {
+        grid-template-columns: auto auto auto;
+    }
+
+    .grid-item {
+        text-align: left;
+    }
+
+    .modal {
+        top: 10% !important;
+    }
+
+    .panel-title {
+        font-family: 'Product Sans';
+        font-weight: bold;
+    }
+
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+
+        .grid-container {
+            grid-template-columns: auto auto;
+        }
+
+        .wrap-input100 {
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        font-size: 60px;
+        color: var(--primary-color);
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+        margin-top: 0 !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

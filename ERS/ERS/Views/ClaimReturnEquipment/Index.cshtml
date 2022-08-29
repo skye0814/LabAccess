@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "LabAccess - Claim/Return Equipment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/ClaimReturnEquipment")";
+    var listPageURL = "@Url.Content("~/ClaimReturnEquipment/ClaimReturnEquipmentList")";
+    var claimPageURL = "@Url.Content("~/ClaimReturnEquipment/ClaimEquipment")";
+    var ReturnPageURL = "@Url.Content("~/ClaimReturnEquipment/ReturnEquipment")";
+    var scanQRCodeURL = "@Url.Content("~/ClaimReturnEquipment/EquipmentQRCodeScanner")";
+    var scanItemQRCodeURL = "@Url.Content("~/ClaimReturnEquipment/ItemQRCodeScanner")";
+    var viewEquipmentRequestURL = "@Url.Content("~/ClaimReturnEquipment/ViewEquipmentRequest")";
+    var requestEquipmentItemInsertURL = "@Url.Content("~/ClaimReturnEquipment/RequestEquipmentItemInsertURL")";
+    var decodeQRCodeURL = "@Url.Content("~/ClaimReturnEquipment/decodeQRCode")";
+    var saveEquipmentItemRequestURL = "@Url.Content("~/ClaimReturnEquipment/SaveEquipmentItemRequest")";
+    var getRequestEquipmentItemListURL = "@Url.Content("~/ClaimReturnEquipment/GetRequestEquipmentItemList")";
+    var updatetClaimedItemsURL = "@Url.Content("~/ClaimReturnEquipment/UpdateClaimedItems")";
+    var getRequestEquipmentListURL = "@Url.Content("~/RequestEquipment/GetRequestEquipmentList")";
+    var cancelRequestEquipment = "@Url.Content("~/RequestEquipment/CancelRequestEquipment")";
+    var checkClaimedItemsURL = "@Url.Content("~/ClaimReturnEquipment/CheckClaimedItems")";
+    
+
+    //PENALTY
+    var addPenaltyURL = "@Url.Content("~/Penalty/PenaltyAdd")";
+    var savePenaltyURL = "@Url.Content("~/Penalty/SavePenalty")";
+
+    LoadPartial(listPageURL, 'divPartialContent');
+
+</script>
+
+<div id="divPartialContent">
+</div>
+
+<div id="divScanModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p id="pheader">Scan QR</p>
+            </div>
+            <div id="divModalErrorMessage"></div> @*This will accept Error messages instead of showing into Alert*@
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group form-fields" id="divScan"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

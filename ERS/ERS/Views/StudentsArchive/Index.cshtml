@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Students Archive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/StudentsArchive")";
+    var listPageURL = "@Url.Content("~/StudentsArchive/StudentsArchiveList")";
+    var editPageURL = "@Url.Content("~/StudentsArchive/StudentsArchiveEdit")";
+    var getStudentListURL = "@Url.Content("~/StudentRegistration/GetStudentList")";
+    var saveStudentURL = "@Url.Content("~/StudentRegistration/SaveStudentRegistration")";
+    var deleteStudentURL = "@Url.Content("~/StudentsArchive/StudentsArchiveDelete")";
+    LoadPartial(listPageURL, "divPartialContent");
+</script>
+
+<div id="divPartialContent">
+    
+</div>
+<div id="divPartialContent1">
+
+</div>

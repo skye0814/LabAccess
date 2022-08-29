@@ -1,0 +1,228 @@
+﻿
+@model ERSEntity.RequestFacilityEntity
+@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+<div class="wrap-contact100">
+    @{
+        ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+        //<input class="FacilityRequestor" value="@objSystemUser.FirstName + ' ' + @objSystemUser.LastName" />
+        <p style="display:none" class="FacilityRequestor"> @objSystemUser.FirstName  @objSystemUser.LastName </p>
+        string GenerateGUID = Guid.NewGuid().ToString();
+
+    }
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFacilityRequest" }))
+    {
+
+
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Add Facility Request
+            </span>
+            <div class="wrap-input100 validate-input" style="display: none">
+                <span class="label-input100">RequestGUID</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.RequestFacilityGUID, new { htmlAttributes = new { @Value = GenerateGUID, @id = "RequestFacilityGUID" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Borrow Date</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "input100", @placeholder = "Select date and time", @autocomplete = "off", @inputmode = "none", @onkeypress = "return false", @onkeyup = "return false", @onkeydown = "return false" } })
+                <span class="focus-input100"></span>
+            </div>
+            @*<div class="wrap-input100 validate-input">
+                <span class="label-input100">End Date and Time</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "input100", @placeholder = "Select date and time", @autocomplete = "off", @inputmode = "none", @disabled = "disabled", @onkeypress = "return false", @onkeyup = "return false", @onkeydown = "return false" } })
+                <span class="focus-input100"></span>
+            </div>*@
+
+            @*<div class="spinner">
+                <img src="~/Content/Images/spinner.svg" class="spinner-logo" />
+                <div class="loading-message">Retrieving available rooms...</div>
+            </div>*@
+            @*<div class="wrap-input100 input100-select" style="display: none">
+                <span class="label-input100">Facility</span><span style="color:red"> *</span>
+                <div>
+                    <select name="FacilityID" id="ddlFacility">
+                        <option value="" selected disabled hidden>Select Facility</option>
+                        @{
+                            foreach (var item in (IEnumerable<SelectListItem>)ViewBag.Facility)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                    <table style="display:none">
+                        @{
+                            foreach (var items in (IEnumerable<SelectListItem>)ViewBag.Facility)
+                            {
+                                <tr class="defaultFacility">
+                                    <td class="defaultFacilityValue">@items.Value</td>
+                                    <td class="defaultFacilityText">@items.Text</td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+                <span class="focus-input100"></span>
+            </div>*@
+            <div class="wrap-input100 input100-select" style="display:none">
+                <span class="label-input100">Facility</span><span style="color:red"> *</span>
+                <div>
+                    <select name="FacilityID" id="ddlFacility">
+                        <option value="" selected disabled hidden>Select Facility</option>
+                        @{
+                            foreach (var item in (IEnumerable<SelectListItem>)ViewBag.Facility)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 input100-select" style="display: none">
+                <span class="label-input100">Select Schedule</span><span style="color:red"> *</span>
+                <div>
+                    <select name="Schedule" id="Schedule">
+                        <option value="" selected disabled hidden>Select Schedule</option>
+                    </select>
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input vacant-time" style="display: none">
+                <span class="label-input100">Start Time</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.VacantStart, new { htmlAttributes = new { @class = "input100", @placeholder = "Select start time", @autocomplete = "off", @inputmode = "none", @onkeypress = "return false", @onkeyup = "return false", @onkeydown = "return false" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input vacant-time" style="display: none">
+                <span class="label-input100">End Time</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.VacantEnd, new { htmlAttributes = new { @class = "input100", @placeholder = "Select end time", @autocomplete = "off", @inputmode = "none", @onkeypress = "return false", @onkeyup = "return false", @onkeydown = "return false" } })
+                <span class="focus-input100"></span>
+            </div>
+
+            <table class="styled-table" style="display: none">
+                <thead>
+                    <tr>
+                        <th>Reserved Schedules</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody id="requests-conflict">
+                </tbody>
+            </table>
+
+            <div class="wrap-input100 validate-input" data-validate="Message is required">
+                <span class="label-input100">Remarks</span>
+                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Your message here..." } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        You may add a message here to the lab personnel regarding your request<br />
+                    </div>
+                </div>
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:60px;" class="form-controls">
+                <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Submit</button>
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+    <div id="dialog-message" title="Request Sent" style="display: none">
+        <input id="qrcode-image" />
+        <input id="qrcode-link" />
+        <input id="qrcode-filename" />
+    </div>
+</div>
+
+<script src="~/Scripts/Page/RequestFacility/RequestFacilityAdd.js"></script>
+
+<style>
+    .styled-table {
+        font-size: 0.9em;
+        font-family: 'Product Sans';
+        width: 100%;
+        border-radius: 7px;
+        overflow: hidden;
+        margin: 15px auto;
+    }
+
+        .styled-table thead tr {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table thead th {
+            text-align: center
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+            text-align: center
+        }
+
+            .styled-table tbody tr.active-row {
+            }
+
+    .qrcode-popout .ui-dialog-titlebar-close {
+        display: none
+    }
+
+    .qrcode-popout {
+        margin: 0 auto;
+    }
+
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color);
+    }
+</style>

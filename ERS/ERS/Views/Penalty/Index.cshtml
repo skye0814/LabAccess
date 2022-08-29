@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Penalty";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var listPageURL = "@Url.Content("~/Penalty/PenaltyList")";
+    var addPageURL = "@Url.Content("~/Penalty/PenaltyAdd")";
+    var editPageURL = "@Url.Content("~/Penalty/PenaltyEdit")";
+    var editItemPageURL = "@Url.Content("~/PenaltyItem/PenaltyItemEdit")";
+    var getPenaltyListURL = "@Url.Content("~/Penalty/GetPenaltyList")";
+    var getEquipmentItemListURL = "@Url.Content("~/EquipmentItem/GetEquipmentItemList")";
+    var deletePenaltyURL = "@Url.Content("~/Penalty/DeletePenalty")";
+    var savePenaltyURL = "@Url.Content("~/Penalty/SavePenalty")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+ 
+</div>
+
+

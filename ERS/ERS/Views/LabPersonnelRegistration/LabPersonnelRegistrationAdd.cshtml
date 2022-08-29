@@ -1,0 +1,115 @@
+﻿
+@model ERSEntity.LabPersonnelEntity
+@{ 
+    Layout = null;
+}
+
+<div class="wrap-contact100">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmLabPersonnelRegistration" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Register Lab Personnel
+            </span>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">First Name</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter first name" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Middle Name</span>
+                @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter middle name" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Last Name</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter last name" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Email Address</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter email address" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Valid Email address must consist of an email prefix and email domain <br />
+                        Ex. example@mail.com
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Username</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter username" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Username accepts 5 to 16 characters only <br />
+                    </div>
+                </div>
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:30px;">
+                <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Submit</button>
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+</div>
+
+<div class="ViewList">
+    <table id="tblLabPersonnelList"></table>
+    <div id="divPager"></div>
+</div>
+<script src="~/Scripts/Page/LabPersonnelRegistration/LabPersonnelRegistrationAdd.js"></script>
+
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+
+    #ddlCourse {
+        width: 100% !important
+    }
+</style>

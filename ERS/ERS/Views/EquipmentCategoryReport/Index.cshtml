@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Equipment Category Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var reportGenerationPageURL = "@Url.Content("~/EquipmentCategoryReport/GenerateEquipmentCategory")";
+    var EquipmentCategoryDownloadURL = "@Url.Content("~/EquipmentCategoryReport/ExportReport")";
+    var getEquipmentCategoryUsageListURL = "@Url.Content("~/EquipmentCategoryReport/GetEquipmentCategoryUsageList")";
+    LoadPartial(reportGenerationPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>
+
+

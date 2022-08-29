@@ -1,0 +1,160 @@
+﻿
+@model ERSEntity.FacilityEntity
+@{
+    Layout = null;
+}
+<div class="wrap-contact100" style="margin-top: 30px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFacility" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.FacilityID)
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Edit Facility
+            </span>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Active / Inactive</span><span style="color:red"> *</span>
+                <div>
+                    @Html.DropDownListFor(model => model.isActive, new[] { new SelectListItem { Text = "True", Value = "true" }, new SelectListItem { Text = "False", Value = "false" } })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Room Number</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.RoomNumber, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @style = "text-transform:uppercase", @placeholder = "Enter room number" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Room Number must be in format CEA-XXX<br />
+                        Ex: CEA-123
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Room Type</span><span style="color:red"> *</span>
+                <div>
+                    @Html.DropDownListFor(model => model.RoomType, new[] { new SelectListItem { Text = "Lecture", Value = "Lecture" },
+                   new SelectListItem { Text = "Laboratory", Value = "Laboratory" } }, new { htmlAttributes = new { @class = "" } })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input" style="display: none">
+                <span class="label-input100">Room Description</span>
+                @Html.EditorFor(model => model.RoomDescription, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter room description" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Comments</span>
+                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter your comments here..." } })
+                <span class="focus-input100"></span>
+            </div>
+
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:30px;">
+                <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Update Facility</button>
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+</div>
+
+<div class="wrap-contact100" style="margin-top: 30px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFacility" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.FacilityID)
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Add Room Schedule
+            </span>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Day</span><span style="color:red"> *</span>
+                <div>
+                    @Html.DropDownListFor(model => model.ScheduleDay, (IEnumerable<SelectListItem>
+                            )ViewBag.daysViewBag,
+                            "Select Day", new { @class = "", @id = "ddlDay", @name = "ddlDay" })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Subject Code</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.SubjectCode, new { htmlAttributes = new { @class = "timepicker input100", @maxlength = "100", @placeholder = "Enter subject code" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Subject Description</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "timepicker input100", @maxlength = "100", @placeholder = "Enter subject description" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Time In</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.TimeIn, new { htmlAttributes = new { @class = "timein input100", @maxlength = "50", @placeholder = "Select Time In" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Time Out</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.TimeOut, new { htmlAttributes = new { @class = "timeout input100", @maxlength = "50", @placeholder = "Select Time Out" } })
+                <span class="focus-input100"></span>
+            </div>
+
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:30px;">
+                <button id="btnSchedule" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-calendar"></i> Add Schedule</button>
+            </div>
+        </form>
+    }
+</div>
+
+<div class="ViewList">
+    <br />
+    <div class="label-category label-category-list" style="margin-top: 40px;">Room Schedules</div>
+    <table id="tblScheduleList"></table>
+    <div id="divPager"></div>
+</div>
+
+<script src="~/Scripts/Page/Facility/FacilityEdit.js"></script>
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

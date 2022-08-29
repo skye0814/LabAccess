@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Equipment Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/RequestEquipment")";
+    var listPageURL = "@Url.Content("~/RequestEquipment/RequestEquipmentList")";
+    var addPageURL = "@Url.Content("~/RequestEquipment/RequestEquipmentAdd")";
+    var editPageURL = "@Url.Content("~/RequestEquipment/RequestEquipmentEdit")";
+    var getRequestEquipmentListURL = "@Url.Content("~/RequestEquipment/GetRequestEquipmentList")";
+    var deleteRequestEquipmentURL = "@Url.Content("~/RequestEquipment/DeleteRequestEquipment")";
+    var saveRequestEquipmentURL = "@Url.Content("~/RequestEquipment/SaveRequestEquipment")";
+    var generateQRCodeURL = "@Url.Content("~/RequestEquipment/GenerateEquipmentItemQRCode")";
+    var getAvailableItemsByRequestDate = "@Url.Content("~/RequestEquipment/GetAvailableItemsByRequestDate")";
+    var cancelRequestEquipment = "@Url.Content("~/RequestEquipment/CancelRequestEquipment")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+
+</script>
+
+<div id="divPartialContent">
+    
+
+</div>
+

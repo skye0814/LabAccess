@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Equipment Request History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/EquipmentRequestHistory")";
+    var listPageURL = "@Url.Content("~/EquipmentRequestHistory/EquipmentRequestHistoryList")";
+    var editPageURL = "@Url.Content("~/RequestEquipment/RequestEquipmentEdit")";
+    var getRequestEquipmentListURL = "@Url.Content("~/RequestEquipment/GetRequestEquipmentList")";
+    var getAvailableItemsByRequestDate = "@Url.Content("~/RequestEquipment/GetAvailableItemsByRequestDate")";
+    LoadPartial(listPageURL, "divPartialContent");
+</script>
+
+<div id="divPartialContent">
+    
+</div>
+<div id="divPartialContent1">
+
+</div>

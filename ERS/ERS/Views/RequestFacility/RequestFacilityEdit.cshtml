@@ -1,0 +1,113 @@
+﻿
+@model ERSEntity.RequestFacilityEntity
+@{
+    Layout = null;
+}
+
+<div class="wrap-contact100" style="margin-top: 30px">
+    @{
+        ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+        //<input class="FacilityRequestor" value="@objSystemUser.FirstName + ' ' + @objSystemUser.LastName" />
+        <p style="display:none" class="FacilityRequestor"> @objSystemUser.FirstName  @objSystemUser.LastName </p>
+
+    }
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRequestFacility" }))
+    {
+
+
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                View Facility Request
+            </span>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Start Date and Time</span>
+                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "input100", @placeholder = "Select date and time", @autocomplete = "off", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">End Date and Time</span>
+                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "input100", @placeholder = "Select date and time", @autocomplete = "off", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Facility</span>
+                <div>
+                    @Html.DropDownListFor(model => model.FacilityID, (IEnumerable<SelectListItem>
+                            )ViewBag.Facility,
+                            "- Select an item -", new { @class = "", @id = "ddlFacility", @name = "FacilityID", @disabled = "disabled" })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Schedule</span>
+                <input type="text" class="input100" value="@ViewBag.Schedule" readonly />
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input" data-validate="Message is required">
+                <span class="label-input100">Remarks</span>
+                @Html.EditorFor(model => model.Remarks, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Your message here...", @readonly = "readonly" } })
+                <span class="focus-input100"></span>
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:60px;">
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style=""><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+</div>
+
+<script src="~/Scripts/Page/RequestFacility/RequestFacilityEdit.js"></script>
+
+<style>
+    .qrcode-popout .ui-dialog-titlebar-close {
+        display: none
+    }
+
+    .qrcode-popout {
+        margin: 0 auto;
+    }
+
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

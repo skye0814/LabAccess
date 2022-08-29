@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+}
+<div id="divErrorMessage"></div>
+
+<div class="field-title" style="display: flex;">
+    <div class="title" style="flex-grow: 1;">Equipment Request History</div>
+</div>
+
+<div class="ViewList">
+    <div class="ViewButtons">
+    </div>
+    @{
+        if (objSystemUser.isLabPersonnel)
+        {
+            <input type="hidden" id="SystemUserID" value=0 />
+        }
+        else
+        {
+            <input type="hidden" id="SystemUserID" value="@objSystemUser.ID" />
+        }
+    }
+    <table id="tblRequestEquipmentList"></table>
+
+    <div id="divPager"></div>
+
+</div>
+
+<div class="empty-record-div">
+    <img src="~/Content/Images/emptyrecord.png" class="empty-record-image" />
+    <p class="empty-record-message">History is empty.<br />Completed and cancelled requests will show here.</p>
+</div>
+
+<script src="~/Scripts/Page/EquipmentRequestHistory/EquipmentRequestHistoryList.js"></script>
+
+<!--Date and time picker dependencies-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/Content/CSS/datetimepicker/bootstrap-datetimepicker.min.css">
+<script src="~/Content/CSS/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#txtRequestDateTime').datetimepicker();
+        $('#txtStartTime').datetimepicker();
+    });
+</script>
+
+<style>
+    .cbox {
+    }
+</style>
+
+

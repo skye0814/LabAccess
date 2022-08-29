@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Equipment List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var listPageURL = "@Url.Content("~/EquipmentItem/EquipmentItemList")";
+    var addPageURL = "@Url.Content("~/EquipmentItem/EquipmentItemAdd")";
+    var editPageURL = "@Url.Content("~/EquipmentItem/EquipmentItemEdit")";
+    var getEquipmentItemListURL = "@Url.Content("~/EquipmentItem/GetEquipmentItemList")";
+    var deleteEquipmentItemtURL = "@Url.Content("~/EquipmentItem/DeleteEquipmentItem")";
+    var saveEquipmentItemURL = "@Url.Content("~/EquipmentItem/SaveEquipmentItem")";
+    var generateQRCodeURL = "@Url.Content("~/EquipmentItem/GenerateEquipmentItemQRCode")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+ 
+</div>
+
+

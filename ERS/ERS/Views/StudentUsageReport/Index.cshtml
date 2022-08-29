@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Student Usage Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var reportGenerationPageURL = "@Url.Content("~/StudentUsageReport/GenerateStudentUsage")";
+    var StudentUsageDownloadURL = "@Url.Content("~/StudentUsageReport/ExportReport")";
+    var getStudentUsageListURL = "@Url.Content("~/StudentUsageReport/GetStudentUsageList")";
+    LoadPartial(reportGenerationPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>
+
+

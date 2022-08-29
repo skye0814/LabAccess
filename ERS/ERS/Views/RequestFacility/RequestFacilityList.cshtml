@@ -1,0 +1,134 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+    var penalties = (List<ERSEntity.PenaltyEntity>)ViewBag.Penalties;
+
+    var count = penalties.Count;
+}
+<div id="divErrorMessage"></div>
+
+<div class="field-title" style="display: flex;">
+    <div class="title" style="flex-grow: 1;">Facility Request</div>
+    @{
+        if (count > 0)
+        {
+            <button type="button" id="btnDeleteRecord" class="btnRemove" title="You have an active penalty"><i class='bx bxs-error'></i> Restricted</button>
+        }
+        else if (count == 0)
+        {
+            <a id="btnAddPage" class="btnAddPage"><i class="glyphicon glyphicon-plus"></i> Add</a>
+        }
+    }
+</div>
+<div class="help-box">
+    <button class="accordion">Penalties [@count]</button>
+    <div class="panel">
+        <div class="penalty-note">
+            <i class='bx bxs-error'></i><span>Note: </span> Active penalties will show here. If you have an active penalty, you are restricted to add another request. Contact your lab personnel regarding your penalty.
+        </div>
+
+        @{
+            if (count > 0)
+            {
+                <p class="legend-title">Active Penalties: </p>
+            }
+            else if (count == 0)
+            {
+                <p class="legend-title">No active penalty</p>
+            }
+            foreach (var penalty in penalties)
+            {
+                <div class="penalty-box">
+                    <p><i class='bx bx-barcode'></i> <span> Request ID:</span> @penalty.RequestGUID</p>
+                    <p><i class='bx bx-calculator'></i> <span> Request Type:</span> @penalty.RequestType</p>
+                    <p><i class='bx bx-message-square-detail'></i> <span> Penalty Details:</span> @penalty.PenaltyDetails</p>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+<div class="help-box">
+    <button class="accordion">Borrowing Guidelines</button>
+    <div class="panel">
+        <p class="legend-title">Legend:</p>
+        <p class="legend-content"><i class="glyphicon glyphicon-eye-open"></i><span> View request details</span></p>
+        <p class="legend-content"><i class="glyphicon glyphicon-qrcode"></i><span> Download QR code</span></p>
+        <p class="legend-content"><i class="glyphicon glyphicon-remove-sign"></i><span> Cancel request</span></p>
+
+        <div class="grid-container">
+            <div class="grid-item"><img src="~/Content/Images/Step 1.png" style="height:100px"><span>1. Save the QR code after placing the request</span></div>
+            <div class="grid-item"><img src="~/Content/Images/Step 2.png" style="height:35px"><span>2. Your request will automatically be reserved and show as "Unclaimed". You can cancel the request by clicking <i class="glyphicon glyphicon-remove-sign"></i> if you changed your mind</span></div>
+            <div class="grid-item"><img src="~/Content/Images/Step 3.png" style="height:100px"><span>3. Show the QR code to the lab personnel and claim your items. Your request will show as "Claimed"</span></div>
+            <div class="grid-item"><img src="~/Content/Images/Step 4.png" style="height:100px"><span>4. Return the equipment/room key to the due date to avoid penalties</span></div>
+            <div class="grid-item"><img src="~/Content/Images/Step 5.png" style="height:100px"><span>5. Talk with the lab personnel if you have penalties</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="ViewList">
+    <div class="ViewButtons">
+        @*<button type="button" id="btnAddPage" class="" title="Add Request"><i class="glyphicon glyphicon-plus"></i></button>*@
+
+    </div>
+
+    <input type="hidden" id="SystemUserID" value="@objSystemUser.ID" />
+    <table id="tblRequestFacilityList"></table>
+
+    <div id="divPager"></div>
+
+</div>
+
+<div class="empty-record-div">
+    <img src="~/Content/Images/emptyrecord.png" class="empty-record-image" />
+    <p class="empty-record-message">There are no requests.<br />Click the ADD button to add a request.</p>
+</div>
+
+<script src="~/Scripts/Page/RequestFacility/RequestFacilityList.js"></script>
+<script src="~/Scripts/Page/accordion.js"></script>
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        font-size: 60px;
+        color: var(--primary-color);
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+        margin-top: 0 !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>
+
+

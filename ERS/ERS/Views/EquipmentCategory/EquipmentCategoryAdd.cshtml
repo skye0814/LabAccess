@@ -1,0 +1,102 @@
+﻿@model ERSEntity.EquipmentCategoryEntity
+@{
+    Layout = null;
+}
+
+<div class="wrap-contact100" style="margin-top: 30px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmEquipmentCategory" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Add Equipment Category
+            </span>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Category</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter category", @style = "text-transform:uppercase" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Category must only contain alphabet characters <br />
+                        Ex. CALCULATOR
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Category Code</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.CategoryCode, new { htmlAttributes = new { @class = "input100", @placeholder = "Enter category code", @maxlength = "5", @style = "text-transform:uppercase" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Category Code must only contain 4 to 5 alphabet characters <br />
+                        Ex. CALCU
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Comments</span>
+                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @placeholder = "Enter your comments here..." } })
+                <span class="focus-input100"></span>
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:30px;">
+                <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Submit</button>
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+</div>
+
+<div class="ViewList">
+    <br />
+    <table id="tblEquipmentCategoryList"></table>
+    <div id="divPager"></div>
+</div>
+
+<script src="~/Scripts/Page/EquipmentCategory/EquipmentCategoryAdd.js"></script>
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

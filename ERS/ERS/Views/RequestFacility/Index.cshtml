@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Facility Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/RequestFacility")";
+    var listPageURL = "@Url.Content("~/RequestFacility/RequestFacilityList")";
+    var addPageURL = "@Url.Content("~/RequestFacility/RequestFacilityAdd")";
+    var editPageURL = "@Url.Content("~/RequestFacility/RequestFacilityEdit")";
+    var getRequestFacilityListURL = "@Url.Content("~/RequestFacility/GetRequestFacilityList")";
+    var deleteRequestFacilityURL = "@Url.Content("~/RequestFacility/DeleteRequestFacility")";
+    var saveRequestFacilityURL = "@Url.Content("~/RequestFacility/SaveRequestFacility")";
+    var generateQRCodeURL = "@Url.Content("~/RequestFacility/GenerateRequestFacilityQRCode")";
+    var getFacilityByRequestDate = "@Url.Content("~/RequestFacility/GetRequestFacilityByRequestDate")";
+    var cancelRequestFacility = "@Url.Content("~/RequestFacility/CancelRequestFacility")";
+    LoadPartial(listPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>

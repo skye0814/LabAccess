@@ -1,0 +1,646 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+    var claimedEquipmentQuantity = (int)ViewBag.TotalClaimedItemQuantity;
+    var unclaimedEquipmentQuantity = (int)ViewBag.TotalUnclaimedItemQuantity;
+    var occupiedFacility = (string[])ViewBag.OccupiedFacilityList;
+    var vacantFacility = (string[])ViewBag.VacantFacilityList;
+    var remainingEquipmentList = (List<ERSEntity.EquipmentCategoryEntity>)ViewBag.RemainingEquipmentList;
+    var ongoingUnclaimedEquipmentList = (List<ERSEntity.RequestDetailsEntity>)ViewBag.OngoingUnclaimedEquipment;
+    var ongoingClaimedEquipmentList = (List<ERSEntity.RequestDetailsEntity>)ViewBag.OngoingClaimedEquipment;
+    var ongoingUnclaimedFacilityList = (List<ERSEntity.RequestFacilityEntity>)ViewBag.OngoingUnclaimedFacility;
+    var ongoingClaimedFacilityList = (List<ERSEntity.RequestFacilityEntity>)ViewBag.OngoingClaimedFacility;
+}
+<script type="text/javascript">
+    // Links only for buttons in the page
+    var requestEquipmentLink = "@Url.Content("~/RequestEquipment")";
+    var requestFacilityLink = "@Url.Content("~/RequestFacility")";
+    var facilityLink = "@Url.Content("~/ClaimReturnFacility")";
+    var equipCategoryLink = "@Url.Content("~/EquipmentCategory")";
+
+    // Links for ajax to controller
+    var getEquipmentUsageByDate = "@Url.Content("~/Home/GetEquipmentUsageByDate")";
+</script>
+
+<div class="container body-content">
+
+    @if (objSystemUser.isLabPersonnel)
+    {
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="dashboard-card">
+                    <p class="dashboard-card-icon"><i class='bx bxs-briefcase-alt-2'></i></p>
+                    <p class="dashboard-card-number">@claimedEquipmentQuantity</p>
+                    <p class="dashboard-card-title">Claimed Items</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="dashboard-card">
+                    <p class="dashboard-card-icon"><i class='bx bxs-briefcase-alt-2'></i></p>
+                    <p class="dashboard-card-number">@unclaimedEquipmentQuantity</p>
+                    <p class="dashboard-card-title">Unclaimed Items</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="dashboard-card">
+                    <p class="dashboard-card-icon"><i class='bx bxs-key'></i></p>
+                    <p class="dashboard-card-number">@occupiedFacility.Count()</p>
+                    <p class="dashboard-card-title">Occupied Rooms</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="dashboard-card">
+                    <p class="dashboard-card-icon"><i class='bx bxs-key'></i></p>
+                    <p class="dashboard-card-number">@vacantFacility.Count()</p>
+                    <p class="dashboard-card-title">Vacant Rooms</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        string partOfDay;
+        string dayIcon;
+        var hours = DateTime.Now.Hour;
+        if (hours > 16)
+        {
+            partOfDay = "evening";
+            dayIcon = Url.Content("~/Content/Images/crescent-moon.png");
+        }
+        else if (hours > 11)
+        {
+            partOfDay = "afternoon";
+            dayIcon = Url.Content("~/Content/Images/afternoon.png");
+        }
+        else
+        {
+            partOfDay = "morning";
+            dayIcon = Url.Content("~/Content/Images/sunrise.png");
+        }
+        <div class="grid-container" style="grid-template-columns: auto !important;">
+            <div class="grid-item" style="height: 135px !important;">
+                <div class="chart-container" style="width: 100%; position: relative">
+                    <p class="chart-title"><img src="@dayIcon" class="day-icon" /> Good @partOfDay, <span style="font-size:14px; color:var(--primary-color)">@objSystemUser.FirstName</span>!</p>
+                    <p class="chart-title">What do you want to request today?</p>
+                    <div class="ViewButtons">
+                        <button class="btnAddPage" onclick="window.location.href = requestEquipmentLink"><i class='bx bx-calculator'></i> Equipment</button>
+                        <button class="btnAddPage" onclick="window.location.href = requestFacilityLink"><i class='bx bx-chalkboard'></i> Facility</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @{
+        if (objSystemUser.isLabPersonnel)
+        {
+            <div class="grid-container grid-single-column" style="grid-template-columns: auto auto;">
+                <div class="grid-item" style="height: 100% !important">
+                    <div class="chart-container">
+                        <p class="chart-title" style="padding-bottom: 50px !important;">Equipment Usage</p>
+                        <select class="classic">
+                            <option>Last 30 days</option>
+                            <option>Last 7 days</option>
+                            <option>Last 1 day</option>
+                        </select>
+
+                        @* Bar chart *@
+                        <canvas id="myChart" style="width:100%;max-width:500px;max-height:100%"></canvas>
+
+                        @* Display this if there are no bar chart values *@
+                        <span class="barchart-message" style="display:none;">
+                            The chart has no values to load
+                        </span>
+
+                    </div>
+                </div>
+                <div class="grid-container" style="grid-template-columns: auto">
+                    <div class="grid-item" style="height: 100% !important">
+                        <div class="chart-container" style="display: table; position: relative; float: none; height: 100%">
+                            <p class="chart-title">Occupied Rooms</p>
+                            <p class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</p>
+                            <div class="scroll-list">
+                                @{
+                                    if (occupiedFacility.Count() == 0)
+                                    {
+                                        <span class="scroll-list-message">No occupied rooms</span>
+                                    }
+                                    else
+                                    {
+                                        <ul>
+                                            @{
+                                                for (int i = 0; i < occupiedFacility.Length; i++)
+                                                {
+                                                    <li>@occupiedFacility[i]</li>
+                                                }
+                                            }
+                                        </ul>
+                                    }
+                                }
+                            </div>
+                            <button class="see-more" onclick="window.location.href = facilityLink">More Details</button>
+                        </div>
+                    </div>
+                    <div class="grid-item" style="height: 100% !important">
+                        <div class="chart-container" style="display: table; position: relative; float: none">
+                            <p class="chart-title">Vacant Rooms</p>
+                            <p class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</p>
+                            <div class="scroll-list">
+                                @{
+                                    if (vacantFacility.Count() == 0)
+                                    {
+                                        <span class="scroll-list-message">No vacant rooms</span>
+                                    }
+                                    else
+                                    {
+                                        <ul>
+                                            @{
+                                                for (int i = 0; i < vacantFacility.Length; i++)
+                                                {
+                                                    <li>@vacantFacility[i]</li>
+                                                }
+                                            }
+                                        </ul>
+                                    }
+                                }
+
+                            </div>
+                            <button class="see-more" onclick="window.location.href = facilityLink">More Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="grid-container single-column-student" style="grid-template-columns: auto auto">
+
+                <div class="grid-item" style="height: 100% !important">
+                    <div class="chart-container" style="display: table; position: relative; float: none; height: 100%">
+                        <p class="chart-title">My Ongoing Equipment Requests</p>
+                        <p class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</p>
+                        <div class="scroll-list">
+                            @{
+                                if (ongoingUnclaimedEquipmentList.Count() == 0 && ongoingClaimedEquipmentList.Count() == 0)
+                                {
+                                    <span class="scroll-list-message">No ongoing item requests</span>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        @{
+                                            foreach(var equipment in ongoingUnclaimedEquipmentList)
+                                            {
+                                                <li>@equipment.Category <span class="quantity-count">@equipment.Quantity</span>  <span class="status-table"><span class="unclaimed">@equipment.Status</span></span></li>
+                                            }
+                                            foreach(var equipment in ongoingClaimedEquipmentList)
+                                            {
+                                                <li>@equipment.Category <span class="quantity-count">@equipment.Quantity</span>  <span class="status-table"><span class="claimed">@equipment.Status</span></span></li>
+                                            }
+                                        }
+                                    </ul>
+                                }
+                            }
+                        </div>
+                        <button class="see-more" onclick="window.location.href = requestEquipmentLink">More Details</button>
+
+                    </div>
+                </div>
+                <div class="grid-item" style="height: 100% !important">
+                    <div class="chart-container" style="display: table; position: relative; float: none">
+                        <p class="chart-title">My Ongoing Facility Request</p>
+                        <p class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</p>
+                        <div class="scroll-list">
+                            @{
+                                if (ongoingUnclaimedFacilityList.Count() == 0 && ongoingClaimedFacilityList.Count() == 0)
+                                {
+                                    <span class="scroll-list-message">No ongoing facility requests</span>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        @{
+                                            foreach(var facility in ongoingUnclaimedFacilityList)
+                                            {
+                                                <li>@facility.RoomNumber <span class="status-table"><span class="unclaimed">@facility.Status</span></span></li>
+                                            }
+                                            foreach(var facility in ongoingClaimedFacilityList)
+                                            {
+                                                <li>@facility.RoomNumber <span class="status-table"><span class="claimed">@facility.Status</span></span></li>
+                                            }
+                                        }
+                                    </ul>
+                                }
+                            }
+
+                        </div>
+                        <button class="see-more" onclick="window.location.href = requestFacilityLink">More Details</button>
+                    </div>
+                </div>
+
+                <div class="grid-item" style="height: 100% !important">
+                    <div class="chart-container" style="display: table; position: relative; float: none; height: 100%">
+                        <p class="chart-title">Occupied Rooms</p>
+                        <p class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</p>
+                        <div class="scroll-list">
+                            @{
+                                if (occupiedFacility.Count() == 0)
+                                {
+                                    <span class="scroll-list-message">No occupied rooms</span>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        @{
+                                            for (int i = 0; i < occupiedFacility.Length; i++)
+                                            {
+                                                <li>@occupiedFacility[i]</li>
+                                            }
+                                        }
+                                    </ul>
+                                }
+                            }
+                        </div>
+                        @{
+                            if (objSystemUser.isLabPersonnel)
+                            {
+                                <button class="see-more" onclick="window.location.href = facilityLink">More Details</button>
+                            }
+                        }
+
+                    </div>
+                </div>
+                <div class="grid-item" style="height: 100% !important">
+                    <div class="chart-container" style="display: table; position: relative; float: none">
+                        <p class="chart-title">Vacant Rooms</p>
+                        <p class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</p>
+                        <div class="scroll-list">
+                            @{
+                                if (vacantFacility.Count() == 0)
+                                {
+                                    <span class="scroll-list-message">No vacant rooms</span>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        @{
+                                            for (int i = 0; i < vacantFacility.Length; i++)
+                                            {
+                                                <li>@vacantFacility[i]</li>
+                                            }
+                                        }
+                                    </ul>
+                                }
+                            }
+
+                        </div>
+                        @{
+                            if (objSystemUser.isLabPersonnel)
+                            {
+                                <button class="see-more" onclick="window.location.href = facilityLink">More Details</button>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="grid-item" style="height: 100% !important; display: none">
+                    <div class="chart-container">
+                        <p class="chart-title" style="padding-bottom: 50px !important;">Equipment Usage</p>
+                        <select class="classic">
+                            <option>Last 30 days</option>
+                            <option>Last 7 days</option>
+                            <option>Last 1 day</option>
+                        </select>
+
+                        @* Bar chart *@
+                        <canvas id="myChart" style="width:100%;max-width:500px;max-height:100%"></canvas>
+
+                        @* Display this if there are no bar chart values *@
+                        <span class="barchart-message" style="display:none;">
+                            The chart has no values to load
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+
+
+    <div class="grid-container grid-single-column" style="grid-template-columns: auto auto">
+        <div class="grid-item max-width-mobile" style="height: 100% !important; width: 100%">
+            <div class="chart-container">
+                <div class="chart-title">Available Equipments</div>
+                <div class="chart-subtitle">As of @DateTime.Now.ToString("MMMM dd, hh:mm tt")</div>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Equipment Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var equipment in remainingEquipmentList)
+                            {
+                                <tr class="active-row">
+                                    <td>@equipment.Category</td>
+                                    <td>@equipment.QuantityUsable</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                @{
+                    if (objSystemUser.isLabPersonnel)
+                    {
+                        <button class="see-more" onclick="window.location.href = equipCategoryLink">More Details</button>
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="grid-item max-width-mobile" style="height: 100% !important; width: 100%">
+            <div class="chart-container">
+                <div class="chart-title">Class Schedules</div>
+                <select class="facilityDropdown">
+                    @{ 
+                        var roomListDropdown = (List<ERSEntity.FacilityEntity>)ViewBag.FacilityListDropdown;
+                        if(roomListDropdown.Count != 0)
+                        {
+                            foreach(var item in roomListDropdown)
+                            {
+                                <option value="@item.FacilityID">@item.RoomNumber</option>
+                            }
+                        }
+                    }
+                </select>
+                <div class="timetable"></div>
+
+            </div>
+        </div>
+        @*<div class="grid-item posunset-in-mobile" style="position: relative; height: unset !important">
+            <div class="date-info">
+                <p>Date: <span>@DateTime.Now.ToString("dd MMMM yyy")</span></p>
+                <p>Time: <span>@DateTime.Now.ToString("hh:mm tt")</span></p>
+                <p>Day: <span>@DateTime.Now.ToString("dddd")</span></p>
+            </div>
+        </div>*@
+    </div>
+
+
+
+</div>
+<script src="~/Scripts/Page/Home/Home.js"></script>
+@{
+    if (objSystemUser.isLabPersonnel)
+    {
+        <style>
+            .header__logo::after {
+                content: 'Dashboard' !important;
+                text-transform: uppercase;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            .header__logo::after {
+                content: 'CPE LabAccess' !important;
+            }
+            @@media screen and (max-width: 760px){
+                .single-column-student{
+                    grid-template-columns: auto !important;
+                }
+            }
+        </style>
+    }
+}
+
+<style>
+    .timetable .time-entry {
+        background-color: rgba(255,141,41,1);
+        border: 1px solid rgba(255,98,0,1);
+        border-radius: 7px;
+    }
+    .day-icon {
+        height: 18px;
+        width: 18px;
+        margin-right: 5px !important;
+    }
+
+    .btnAddPage {
+        margin: 0 3px;
+    }
+
+    .ViewButtons {
+        margin: 10px auto;
+        padding-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center
+    }
+
+    .date-info {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+    }
+
+        .date-info p, .date-info p span {
+            font-size: 14px;
+            font-family: 'Product Sans';
+            font-weight: lighter;
+        }
+
+    .styled-table {
+        font-size: 0.9em;
+        font-family: 'Product Sans';
+        width: 100%;
+        border-radius: 7px;
+        overflow: hidden;
+        margin: 15px auto;
+    }
+
+        .styled-table thead tr {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table thead th {
+            text-align: center
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+            text-align: center
+        }
+
+            .styled-table tbody tr.active-row {
+            }
+
+    .header__logo span {
+        display: none
+    }
+
+    .see-more {
+        padding: 5px 10px 5px 10px;
+        background-color: #EEEEEE;
+        margin: 10px auto 0 auto;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        display: block;
+        border: none;
+        border-radius: 7px;
+        font-family: 'Product Sans';
+        font-size: 14px;
+        transform: translateY(5px);
+        font-weight: 500;
+    }
+
+    .scroll-list-message {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .scroll-list {
+        height: 100px;
+        overflow-y: auto;
+        position: relative;
+    }
+
+        .scroll-list ul {
+            position: absolute;
+            padding: 0;
+            padding-left: 10px !important;
+            padding-top: 10px;
+        }
+
+            .scroll-list ul li {
+                list-style: none;
+                padding-bottom: 10px !important;
+                font-family: 'Product Sans';
+                font-size: 12px;
+            }
+
+    select.classic {
+        background: none;
+        top: 15px;
+        right: 20px;
+        position: absolute;
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 0.5em 2em 0.5em 0.5em;
+        border: 1px solid white;
+        font: inherit;
+        font-family: 'Product Sans';
+        line-height: inherit;
+        -webkit-appearance: none;
+        font-size: 12px !important;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        background-repeat: no-repeat;
+        background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+        background-position: right 15px top 1em, right 10px top 1em;
+        background-size: 5px 5px, 5px 5px;
+    }
+
+        select.classic:focus {
+            outline: none;
+            border: none
+        }
+
+    select.facilityDropdown {
+        background: none;
+        top: 15px;
+        right: 20px;
+        position: absolute;
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 0.5em 2em 0.5em 0.5em;
+        border: 1px solid white;
+        font: inherit;
+        font-family: 'Product Sans';
+        line-height: inherit;
+        -webkit-appearance: none;
+        font-size: 12px !important;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        background-repeat: no-repeat;
+        background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+        background-position: right 15px top 1em, right 10px top 1em;
+        background-size: 5px 5px, 5px 5px;
+    }
+
+        select.facilityDropdown:focus {
+            outline: none;
+            border: none
+        }
+
+    .container.body-content {
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        padding-left: 40px
+    }
+
+    .ViewButtons button {
+        margin-bottom: 5px
+    }
+
+    .grid-container .grid-item {
+        display: block;
+        text-align: unset;
+        height: 125px !important
+    }
+
+    .grid-container {
+        grid-template-columns: auto auto auto auto
+    }
+
+    @@media screen and (max-width: 760px) {
+        .grid-container {
+            grid-template-columns: auto auto
+        }
+
+        .container.body-content {
+            margin-left: 0;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .grid-single-column {
+            grid-template-columns: auto !important
+        }
+
+        .max-width-mobile {
+            width: 100% !important
+        }
+
+        .date-info {
+            position: center;
+        }
+
+        .posunset-in-mobile {
+            display: none !important;
+        }
+    }
+</style>
+

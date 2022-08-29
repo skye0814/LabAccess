@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+@{
+    ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+}
+<div id="divErrorMessage"></div>
+
+<div class="field-title" style="display: flex;">
+    <div class="title" style="flex-grow: 1;">Facility Request History</div>
+</div>
+
+<div class="ViewList">
+    <div class="ViewButtons">
+        @*<button type="button" id="btnAddPage" class="" title="Add Request"><i class="glyphicon glyphicon-plus"></i></button>*@
+
+    </div>
+    @{
+        if (objSystemUser.isLabPersonnel)
+        {
+            <input type="hidden" id="SystemUserID" value=0 />
+        }
+        else
+        {
+            <input type="hidden" id="SystemUserID" value="@objSystemUser.ID" />
+        }
+    }
+    <table id="tblRequestFacilityList"></table>
+
+    <div id="divPager"></div>
+
+</div>
+
+<div class="empty-record-div">
+    <img src="~/Content/Images/emptyrecord.png" class="empty-record-image" />
+    <p class="empty-record-message">History is empty.<br />Completed and cancelled requests will show here.</p>
+</div>
+
+<script src="~/Scripts/Page/FacilityRequestHistory/FacilityRequestHistoryList.js"></script>
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        font-size: 60px;
+        color: var(--primary-color);
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+        margin-top: 0 !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>
+
+

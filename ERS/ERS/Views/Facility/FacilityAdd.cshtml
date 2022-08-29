@@ -1,0 +1,106 @@
+﻿
+@model ERSEntity.FacilityEntity
+@{
+    Layout = null;
+}
+<div class="wrap-contact100" style="margin-top: 30px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmFacility" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Add Facility
+            </span>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Room Number</span><span style="color:red"> *</span>
+                @Html.EditorFor(model => model.RoomNumber, new { htmlAttributes = new { @class = "input100", @maxlength = "50", @style = "text-transform:uppercase", @placeholder = "Enter room number" } })
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        Room Number must be in format CEA-XXX<br />
+                        Ex: CEA-123
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-input100 input100-select">
+                <span class="label-input100">Room Type</span><span style="color:red"> *</span>
+                <div>
+                    @Html.DropDownListFor(model => model.RoomType, new[] { new SelectListItem { Text = "Lecture", Value = "Lecture" }, 
+                   new SelectListItem { Text = "Laboratory", Value = "Laboratory" } }, new { htmlAttributes = new { @class = "" } })
+                </div>
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input" style="display:none">
+                <span class="label-input100">Room Description</span>
+                @Html.EditorFor(model => model.RoomDescription, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter room description" } })
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Comments</span>
+                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "input100", @maxlength = "250", @placeholder = "Enter your comments here..." } })
+                <span class="focus-input100"></span>
+            </div>
+
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center; margin-top:30px;">
+                <button id="btnSave" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Submit</button>
+                <button id="btnReturnList" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+</div>
+
+<div class="ViewList">
+    <br />
+    <br />
+    <h4 class="panel-title">Facility List</h4>
+    <table id="tblFacilityList"></table>
+    <div id="divPager"></div>
+</div>
+
+<script src="~/Scripts/Page/Facility/FacilityAdd.js"></script>
+<style>
+    @@media screen and (max-width: 760px) {
+        .modal-body {
+            font-family: 'Product Sans' !important;
+        }
+    }
+
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>

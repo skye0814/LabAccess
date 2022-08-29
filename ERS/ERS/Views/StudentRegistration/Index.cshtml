@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Student Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/StudentRegistration")";
+    var listPageURL = "@Url.Content("~/StudentRegistration/StudentRegistrationList")";
+    var addPageURL = "@Url.Content("~/StudentRegistration/StudentRegistrationAdd")";
+    var editPageURL = "@Url.Content("~/StudentRegistration/StudentRegistrationEdit")";
+    var getStudentListURL = "@Url.Content("~/StudentRegistration/GetStudentList")";
+    var deleteStudentURL = "@Url.Content("~/StudentRegistration/MoveStudentToArchive")";
+    var saveStudentURL = "@Url.Content("~/StudentRegistration/SaveStudentRegistration")";
+
+    var formStudentRegistrationURL = "@Url.Content("~/StudentRegistration/DownloadForm")?id=@((int)ERSUtil.FormUtil.StudentRegistration)";
+    var uploadStudentRegistrationURL = "@Url.Content("~/StudentRegistration/UploadStudentRegistration")";
+    var deleteUploadedStudentRegistrationFile = "@Url.Content("~/StudentRegistration/DeleteUploadedFile")";
+    var saveUploadedStudentRegistrationURL = "@Url.Content("~/StudentRegistration/SaveUploadedStudentRegistration")";
+    LoadPartial(listPageURL, 'divPartialContent');
+
+</script>
+
+<div id="divPartialContent">
+</div>
+
+

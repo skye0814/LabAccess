@@ -1,0 +1,246 @@
+﻿
+@model ERSEntity.RequestsEntity
+@{
+    Layout = null;
+}
+<div id="divErrorMessage"></div>
+<div class="wrap-contact100" style="margin-top: 20px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRequestEquipment" }))
+    {
+
+        var requests = (ERSEntity.RequestsEntity)ViewBag.Requests;
+
+        <table id="debug-table" class="table table-responsive" style="">
+        </table>
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                View Equipment Request
+            </span>
+
+            <div class="label-category">Request Details</div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Start Date and Time</span>
+                <input type="text" id="start-time" class="input100 start-time" value="@requests.StartTime" readonly />
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">End Date and Time</span>
+                <input type="text" id="end-time" class="input100 end-time" value="@requests.EndTime" readonly />
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Remarks</span>
+                <input id="description" class="input100" placeholder="Enter your message here..." value="@requests.Remarks" readonly/>
+                <span class="focus-input100"></span>
+            </div>
+
+            <div class="label-category" style="margin-top: 40px">Request Equipment Items</div>
+            <div class="orderItems">
+                <table class="table table-responsive" id="orderdetailsItems">
+                    @{
+                        int indexOfForEach = 0;
+                        var quantityList = (List<ERSEntity.RequestDetailsEntity>)ViewBag.RequestDetailsList;
+                        var equipList = (List<ERSEntity.EquipmentCategoryEntity>)ViewBag.EquipmentCategoryList;
+
+                        var result = (from a in equipList
+                                      join b in quantityList on a.EquipmentCategoryID equals b.EquipmentCategoryID
+                                      select new
+                                      {
+                                          a.EquipmentCategoryID,
+                                          a.CategoryCode,
+                                          a.Category,
+                                          b.Quantity
+                                      }).ToList();
+                    }
+                    @foreach (var item in result)
+                    {
+
+                        <tr class="checkbox-table">
+                            <td class="td-checkbox" style="width: 50px;">
+                            </td>
+
+                            <td class="td-name">
+                                <label>(@item.CategoryCode) @item.Category</label>
+                                <span class="error"> * Required</span>
+                            </td>
+                            <td class="td-quanti" style="display: flex; padding-left: 40px !important">
+                                <input type="number" class="form-control quantity-checkbox" id="quantity-checkbox" value="@item.Quantity" disabled>
+                                @{
+                                    indexOfForEach++;
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <input class="indexOfForEach" style="display: none;" value="@indexOfForEach">
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center;">
+                <button id="return" class="btnAddPage btnSecondary" onclick="return false"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+    <div id="dialog-message" title="Request Sent" style="display: none">
+        <input id="qrcode-image" />
+        <input id="qrcode-link" />
+        <input id="qrcode-filename" />
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#return').click(function () {
+            ReturnConfirmation(MODAL_HEADER_RETURN, MSG_CONFIRM_BACK, mainPageURL, false);
+        });
+
+        var header = document.getElementById('header__logo');
+        header.href = mainPageURL;
+        header.innerHTML = `<div style='display:flex'>
+                            <i class='bx bxs-chevron-left' style='font-size: 25px;' ></i> 
+                            <span style='padding-top: 1px'>REQUEST DETAILS</span>
+                        </div>`;
+
+    });
+</script>
+
+<style>
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+    label {
+        font-family: 'Product Sans'
+    }
+
+    @@media screen and (min-width: 760px) {
+        .wrap-contact100 {
+            width: 550px !important
+        }
+    }
+
+    @@media screen and (max-width: 760px) {
+        .table-responsive {
+            border: none !important
+        }
+
+        .td-name {
+            width: 50px;
+            transform: translateX(-15px)
+        }
+
+        table tbody tr td {
+            padding: 0 !important
+        }
+    }
+
+    table {
+        border: none
+    }
+
+        table tbody tr td {
+            border: none !important;
+        }
+
+    .quantity-checkbox {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+        .quantity-checkbox::-webkit-inner-spin-button,
+        .quantity-checkbox::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+    .td-quanti input[type=number] {
+        font-family: sans-serif;
+        max-width: 5rem;
+        padding: .5rem;
+        border: none;
+        border-width: 0 2px;
+        font-size: 2rem;
+        height: 3rem;
+        font-weight: bold;
+        text-align: center;
+        color: var(--primary-color);
+    }
+
+    .td-quanti button {
+        outline: none;
+        -webkit-appearance: none;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: bold;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        width: 2.8rem;
+        height: 2.8rem;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+        box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+        border-radius: 5px;
+        visibility: hidden;
+    }
+
+        .td-quanti button:hover {
+            color: black;
+            background-color: white;
+            transform: translateY(-1px);
+        }
+
+    span.error {
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+        font-weight: bold
+    }
+
+    tr.error {
+        background-color: rgba(255, 0, 0, 0.35);
+    }
+
+    .td-category, .td-quantity {
+        visibility: hidden;
+    }
+
+    .qrcode-popout .ui-dialog-titlebar-close {
+        display: none
+    }
+
+    .qrcode-popout {
+        margin: 0 auto;
+    }
+</style>

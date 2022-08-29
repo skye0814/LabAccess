@@ -1,0 +1,17 @@
+﻿
+@{
+    ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+    ViewBag.Title = objSystemUser.UserName + " - Change Password";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var changePassPageURL = "@Url.Content("~/ChangePassword/ChangePassword")";
+    var savePasswordURL = "@Url.Content("~/ChangePassword/SavePassword")";
+    LoadPartial(changePassPageURL, 'divPartialContent');
+
+</script>
+
+<div id="divPartialContent">
+</div>
+

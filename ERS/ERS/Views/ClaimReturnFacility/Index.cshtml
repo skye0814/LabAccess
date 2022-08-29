@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "LabAccess - Claim/Return Facility";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/ClaimReturnFacility")";
+    var listPageURL = "@Url.Content("~/ClaimReturnFacility/ClaimReturnFacilityList")";
+    var scanQRCodeURL = "@Url.Content("~/ClaimReturnFacility/FacilityQRCodeScanner")";
+    var viewFacilityRequestURL = "@Url.Content("~/ClaimReturnFacility/ViewFacilityRequest")";
+    var decodeQRCodeURL = "@Url.Content("~/ClaimReturnFacility/decodeQRCode")";
+    var updateClaimedRequestURL = "@Url.Content("~/ClaimReturnFacility/UpdateClaimedRequest")";
+    var getRequestFacilityListURL = "@Url.Content("~/RequestFacility/GetRequestFacilityList")";
+    var setRoomURL = "@Url.Content("~/ClaimReturnFacility/SetRoom")";
+    var cancelRequestFacility = "@Url.Content("~/RequestFacility/CancelRequestFacility")";
+    LoadPartial(listPageURL, 'divPartialContent');
+
+    //PENALTY
+    var addPenaltyURL = "@Url.Content("~/Penalty/PenaltyAdd")";
+    var savePenaltyURL = "@Url.Content("~/Penalty/SavePenalty")";
+
+</script>
+
+<div id="divPartialContent">
+</div>
+
+<div id="divScanModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p id="pheader">Scan QR</p>
+            </div>
+            <div id="divModalErrorMessage"></div> @*This will accept Error messages instead of showing into Alert*@
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group form-fields" id="divScan"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

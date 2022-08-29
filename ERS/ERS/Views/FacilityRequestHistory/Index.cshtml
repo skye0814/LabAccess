@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Facility Request History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var mainPageURL = "@Url.Content("~/FacilityRequestHistory")";
+    var listPageURL = "@Url.Content("~/FacilityRequestHistory/FacilityRequestHistoryList")";
+    var editPageURL = "@Url.Content("~/RequestFacility/RequestFacilityEdit")";
+    var getRequestFacilityListURL = "@Url.Content("~/RequestFacility/GetRequestFacilityList")";
+    var getFacilityByRequestDate = "@Url.Content("~/RequestFacility/GetRequestFacilityByRequestDate")";
+    LoadPartial(listPageURL, "divPartialContent");
+</script>
+
+<div id="divPartialContent">
+
+</div>

@@ -1,0 +1,553 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="~/Content/Images/favicon.ico">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" defer />
+    @*<link href="~/Content/Site.css" rel="stylesheet" defer />*@
+    <link href="~/Content/CSS/ers.css" rel="stylesheet" defer />
+    <link href="~/Content/CSS/font-awesome.css" rel="stylesheet" defer />
+    <link href="~/Content/CSS/jqGrid.Modified.css" rel="stylesheet" defer />
+
+    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/jqGrid.Custom.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.0.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/respond.min.js"></script>
+    @*<script src="~/Scripts/moment.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="~/Scripts/anseki-jquery-plainoverlay/jquery.plainoverlay.min.js"></script>
+
+    <script src="~/Scripts/jquery.jqGrid.min.js"></script>
+    <script src="~/Scripts/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/additional-methods.min.js"></script>
+    <script src="~/Scripts/aes.js"></script>
+    <script src="~/Scripts/Page/ers.js"></script>
+    <script src="~/Scripts/Page/Common.js"></script>
+
+    @* ChartJS *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient"></script>
+
+    @* Timetable JS *@
+    <script src="~/Scripts/Plugins/timetable.js-master/scripts/timetable.js"></script>
+    <link rel="stylesheet" href="~/Scripts/Plugins/timetable.js-master/styles/timetablejs.css" />
+    
+    <script src="~/Scripts/Page/ERSFormatting.js"></script>
+    <script src="~/Scripts/Page/ERSMessages.js"></script>
+
+    <script src="~/Scripts/Plugins/QRCode/html5-qrcode.min_.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <script src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
+    <!--========== BOX ICONS ==========-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+    <script type="text/javascript">
+        var loginPageURL = "@Url.Content("~/")";
+        var downloadReportURL = "@Url.Content("~/Common/DownloadReport")";
+        var IsTransactionPage = false;
+
+        function GoToPage(url) {
+            if (location.pathname.toUpperCase() != "/"
+                && location.pathname.toUpperCase() != "/Home"
+                && location.pathname.toUpperCase() != "/Home/Index") {
+
+                //if (location.pathname.toUpperCase() != url.toUpperCase())
+                //    ReturnConfirmation("Back", "Are you sure you want to leave this page?", url);
+
+                if (window.IsTransactionPage) {
+                    ReturnConfirmation("ERS", "Are you sure you want to leave this page?", url);
+                }
+                else {
+                    //if (location.pathname.toUpperCase() != url.toUpperCase()) {
+                    ReturnPage(url);
+                    // }
+                }
+            }
+            else {
+                window.location = url;
+            }
+        }
+
+
+        $(document).ready(function () {
+           
+
+            EnableAccordion();
+            function EnableAccordion() {
+                $(".AccordionList .field-title").click(function () {
+                    if ($(".AccordionList").hasClass("off")) {
+                        $(".AccordionList").removeClass("off");
+                        $(".AccordionList").addClass("on");
+                    }
+                    else if ($(".AccordionList").hasClass("on")) {
+                        $(".AccordionList").removeClass("on");
+                        $(".AccordionList").addClass("off");
+                    }
+                });
+            }
+            //Observer observing observed data
+            //If there is change/mutation in the child of the observed data the (EnableAccordion) will trigger
+            //>> observer = MutationObserver(trigger) <<
+            var observer = new MutationObserver(EnableAccordion),
+                targetElement = document.querySelector("#divPartialContent"),
+                objConfig = { childList: true };
+            if ($("#divPartialContent").length) {
+                observer.observe(targetElement, objConfig);
+            }
+        });
+    </script>
+
+</head>
+<body>
+    @{
+        ERSEntity.SystemUserEntity objSystemUser = (ERSEntity.SystemUserEntity)Session["SystemUser"];
+        var allPenalties = (List<ERSEntity.PenaltyEntity>)ViewBag.AllPenalties;
+    }
+
+    <header class="header">
+        <div class="header__container">
+
+            <a href="~/Home" class="header__logo" id="header__logo"><span>CPE LabAccess</span></a>
+
+            @{
+                if (objSystemUser != null)
+                {
+                    <div class="header_user_container">
+                        <div class="account-dropdown account-dropdown-1">
+                            @{
+                                if (allPenalties == null || allPenalties.Count == 0)
+                                {
+                                    <i class='bx bx-bell notif-icon' style="padding-top: 5px;"></i>
+                                }
+                                else
+                                {
+                                    <i class='bx bx-bell notif-icon' style="padding-top: 5px; position:relative"><span class="notif-count">@allPenalties.Count</span></i>
+                                }
+                            }
+                            <div class="notif-dropdown-content">
+                                <i class='bx bxs-up-arrow'></i>
+                                <i class='bx bx-x close-popup'></i>
+                                <span style="font-weight:bold; font-size: 13px">Penalty Notifications</span>
+                                <ul class="notif-list">
+                                    @{
+                                        if (allPenalties == null || allPenalties.Count == 0)
+                                        {
+                                            <span>No notifications</span>
+                                        }
+                                        else
+                                        {
+                                            foreach (var notifPenalty in allPenalties)
+                                            {
+                                                if (notifPenalty.RequestType == "Equipment")
+                                                {
+                                                    <li>You have an active penalty in <div style="font-weight: bold;">@notifPenalty.RequestType Request.</div> <a href="@Url.Content("~/RequestEquipment")">Click here</a> to view penalty details.</li>
+                                                }
+                                                else if (notifPenalty.RequestType == "Facility")
+                                                {
+                                                    <li>You have an active penalty in <div style="font-weight: bold;">@notifPenalty.RequestType Request.</div> <a href="@Url.Content("~/RequestFacility")">Click here</a> to view penalty details.</li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <span class="profile-picture account-dropdown-2">@objSystemUser.FirstName.Substring(0, 1)</span>
+                        <div class="account-dropdown">
+                            <span class="header_username">@objSystemUser.FirstName <i class='bx bxs-down-arrow'></i></span>
+                            <div class="account-dropdown-content">
+                                <i class='bx bxs-up-arrow'></i>
+                                <i class='bx bx-x close-popup'></i>
+                                <div class="account-details">
+                                    <span class="profile-picture" style="height: 30px; width: 30px; line-height: 30px; font-size: 18px; font-family: 'Product Sans';">@objSystemUser.FirstName.Substring(0, 1)</span>
+                                    <div class="account-credentials">
+                                        <p style="font-weight: bold">@objSystemUser.FirstName @objSystemUser.LastName</p>
+                                        @{
+                                            if (objSystemUser.isLabPersonnel && objSystemUser.isStudent)
+                                            {
+                                                <p>@objSystemUser.UserName (Superadmin)</p>
+                                            }
+                                            else if (objSystemUser.isLabPersonnel)
+                                            {
+                                                <p>@objSystemUser.UserName (Lab Personnel)</p>
+                                            }
+                                            else if (objSystemUser.isStudent)
+                                            {
+                                                <p>@objSystemUser.UserName</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li><a href="@Url.Content("~/ChangePassword")">Change password</a></li>
+                                    <li style="padding-bottom: 0 !important"><a href="@Url.Content("~/Login/Logout")">Log out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                }
+            }
+
+            <div class="header__toggle">
+                <i class='bx bx-menu' id="header-toggle"></i>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="nav" id="navbar">
+        <nav class="nav__container">
+            <div>
+                <a href="@Url.Content("~/Home")" class="nav__link nav__logo">
+                    <img class="logo-nav" src="~/Content/Images/logo (1).png" />
+                    <span class="nav__logo-name">CPE LabAccess</span>
+                </a>
+                <div class="nav__list">
+
+                    @{
+                        if (objSystemUser != null)
+                        {
+                            <div class="nav__items">
+                                <h3 class="nav__subtitle">Transaction</h3>
+
+                                <!--<div class="nav__dropdown">
+                                    <a href="#" class="nav__link">
+                                        <i class='bx bx-user nav__icon'></i>
+                                        <span class="nav__name">@objSystemUser.UserName</span>
+                                        <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                    </a>
+                                    <div class="nav__dropdown-collapse">
+                                        <div class="nav__dropdown-content">
+                                            <a href="@Url.Content("~/ChangePassword")" class="nav__dropdown-item">Change Password</a>-->
+                                            @*<a href="@Url.Content("~/Login/Logout")" class="nav__dropdown-item">Log out</a>*@
+                                        <!--</div>
+                                    </div>
+                                </div>-->
+                                <div class="nav__dropdown">
+                                    <a href="@Url.Content("~/Penalty")" class="nav__link">
+                                        <i class='bx bx-flag nav__icon'></i>
+                                        <span class="nav__name">Penalties</span>
+                                    </a>
+                                </div>
+
+                                @{ 
+                                    if(objSystemUser.isLabPersonnel && objSystemUser.isStudent)
+                                    {
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bx-history nav__icon'></i>
+                                                <span class="nav__name">Transaction History</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/EquipmentRequestHistory")" class="nav__dropdown-item">Equipment Request History</a>
+                                                    <a href="@Url.Content("~/FacilityRequestHistory")" class="nav__dropdown-item">Facility Request History</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (objSystemUser.isStudent)
+                                    {
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bx-history nav__icon'></i>
+                                                <span class="nav__name">Transaction History</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/EquipmentRequestHistory")" class="nav__dropdown-item">Equipment Request History</a>
+                                                    <a href="@Url.Content("~/FacilityRequestHistory")" class="nav__dropdown-item">Facility Request History</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+
+                            <div class="nav__items">
+                                <h3 class="nav__subtitle">Menu</h3>
+                                @{
+                                    if (@objSystemUser.isLabPersonnel)
+                                    {
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bx-wrench nav__icon'></i>
+                                                <span class="nav__name">Maintenance</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/StudentRegistration")" class="nav__dropdown-item">Student Registration</a>
+                                                    <a href="@Url.Content("~/LabPersonnelRegistration")" class="nav__dropdown-item">Lab Personnel Registration</a>
+                                                    <a href="@Url.Content("~/EquipmentCategory")" class="nav__dropdown-item">Equipment Category</a>
+                                                    <a href="@Url.Content("~/EquipmentItem")" class="nav__dropdown-item">Equipment List</a>
+                                                    <a href="@Url.Content("~/Facility")" class="nav__dropdown-item">Facility List</a>
+                                                    @*<a href="@Url.Content("~/StudentRegistration")" class="nav__dropdown-item">Facility</a>*@
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bx-transfer-alt nav__icon'></i>
+                                                <span class="nav__name">Transaction</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/ClaimReturnEquipment")" class="nav__dropdown-item">Claim / Return Equipment</a>
+                                                    <a href="@Url.Content("~/ClaimReturnFacility")" class="nav__dropdown-item">Claim / Return Facility</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bxs-report nav__icon'></i>
+                                                <span class="nav__name">Report</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/EquipmentCategoryReport")" class="nav__dropdown-item">Equipment Inventory</a>
+                                                    <a href="@Url.Content("~/EquipmentUsageReport")" class="nav__dropdown-item">Equipment Usage</a>
+                                                    <a href="@Url.Content("~/FacilityUsageReport")" class="nav__dropdown-item">Facility Usage</a>
+                                                    <a href="@Url.Content("~/StudentUsageReport")" class="nav__dropdown-item">Usage Per Year Level</a>
+                                                    <a href="@Url.Content("~/TransactionReport")" class="nav__dropdown-item">Transaction History</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bx-box nav__icon'></i>
+                                                <span class="nav__name">Archive</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/StudentsArchive")" class="nav__dropdown-item">Students Archive</a>
+                                                    @{ 
+                                                        if (objSystemUser.isStudent && objSystemUser.isLabPersonnel)
+                                                        {
+                                                            <a href="@Url.Content("~/LabPersonnelArchive")" class="nav__dropdown-item">Lab Personnel Archive</a>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                @{
+                                    if (@objSystemUser.isStudent)
+                                    {
+                                        <div class="nav__dropdown">
+                                            <a href="#" class="nav__link">
+                                                <i class='bx bx-question-mark nav__icon'></i>
+                                                <span class="nav__name">Request</span>
+                                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                                            </a>
+                                            <div class="nav__dropdown-collapse">
+                                                <div class="nav__dropdown-content">
+                                                    <a href="@Url.Content("~/RequestEquipment")" class="nav__dropdown-item">Equipment Request</a>
+                                                    <a href="@Url.Content("~/RequestFacility")" class="nav__dropdown-item">Facility Request</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        }
+
+
+                    }
+                </div>
+            </div>
+            @*<a href="@Url.Content("~/Login/Logout")" class="nav__link nav__logout">
+                <i class='bx bx-log-out nav__icon'></i>
+                <span class="nav__name" id="nav__name_logout">Log out</span>
+            </a>*@
+        </nav>
+    </div>
+
+    <div class="container body-content">
+
+
+        @RenderBody()
+    </div>
+    <footer></footer>
+
+    @RenderSection("scripts", required: false)
+
+    @* Comfirmation Modal *@
+    <div id="divModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div id="divHeaderModal" class="modal-header"></div>
+                <div id="divBodyModalLogo" class="modal-body-logo"></div>
+                <div id="divBodyModal" class="modal-body"></div>
+                <div id="divFooterModal" class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    @* End of Comfirmation Modal *@
+
+
+
+    @* Export Modal *@
+    <div id="divExportModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p>Export</p>
+                </div>
+                <div class="modal-body">
+                    <div class="modalExport">
+                        <div class="rdoxls">
+                            <label><input type="radio" name="export" value="EXCEL" checked="checked" />Excel</label>
+                        </div>
+                        <div class="rdopdf">
+                            <label><input type="radio" name="export" value="PDF" />PDF</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnContinueExport" class="btnRed formbtn glyphicon glyphicon-export" title="Export"> Export</button>&nbsp;
+                    <button type="button" id="btnCancelExport" class="btnGray formbtn glyphicon glyphicon-remove" title="Cancel"> Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* End of Export Modal *@
+
+    @* Upload Modal *@
+    <input type="hidden" id="hdnContentSessionId" value="" />
+    <div id="divUploadModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p id="pheader">Upload</p>
+                </div>
+                <div id="divModalErrorMessage"></div> @*This will accept Error messages instead of showing into Alert*@
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group form-fields">
+                            <div class="col-md-8 col-label">
+                                <input type="file" id="fileUpload" class="form-control File-Input" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <div id="divUploadForm"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer" id="divFooterUploadModal"></div>
+            </div>
+        </div>
+    </div>
+    @* End of Upload Modal *@
+
+    <script>
+        $(document).ready(function () {
+            $('.header_username').click(function () {
+                $('.account-dropdown-content').css('display', 'block');
+                $('.notif-dropdown-content').css('display', 'none');
+            });
+            $('.profile-picture').click(function () {
+                $('.account-dropdown-content').css('display', 'block');
+                $('.notif-dropdown-content').css('display', 'none');
+            });
+            $('.close-popup').click(function () {
+                $('.account-dropdown-content').css('display', 'none');
+            });
+            $('.notif-icon').click(function () {
+                $('.notif-dropdown-content').css('display', 'block');
+                $('.account-dropdown-content').css('display', 'none');
+            });
+            $('.close-popup').click(function () {
+                $('.notif-dropdown-content').css('display', 'none');
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                /*==================== SHOW NAVBAR ====================*/
+                const showMenu = (headerToggle, navbarId) => {
+                    const toggleBtn = document.getElementById(headerToggle),
+                        nav = document.getElementById(navbarId)
+                    // Validate that variables exist
+                    if (headerToggle && navbarId) {
+                        toggleBtn.addEventListener('click', () => {
+                            // We add the show-menu class to the div tag with the nav__menu class
+                            nav.classList.toggle('show-menu')
+                            // change icon
+                            toggleBtn.classList.toggle('bx-x')
+                        })
+                    }
+                }
+                showMenu('header-toggle', 'navbar')
+                /*==================== LINK ACTIVE ====================*/
+                const linkColor = document.querySelectorAll('.nav__link')
+                function colorLink() {
+                    linkColor.forEach(l => l.classList.remove('active'))
+                    this.classList.add('active')
+                }
+                linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+                $(".navbar-nav-list").click(function () {
+                    $(".navbar-nav-list").find(".subnavbar-nav").addClass("nav-hidden");
+                    $(".navbar-nav-list").removeClass("navbar-active");
+
+                    $(this).find(".subnavbar-nav").removeClass("nav-hidden");
+                    $(this).addClass("navbar-active");
+                });
+
+                $(".navbar-nav-list2").click(function () {
+                    $(this).find(".subnavbar-nav2").removeClass("nav-hidden2");
+                    $(this).addClass("navbar-active2");
+
+                    $(this).closest(".subnavbar-nav").css("overflow", "visible");
+                });
+
+                $(".navbar-nav-list2").mouseleave(function () {
+                    $(this).find(".subnavbar-nav2").addClass("nav-hidden2");
+                    $(this).removeClass("navbar-active2");
+
+                    $(this).closest(".subnavbar-nav").removeAttr("style");
+                });
+            });
+        });
+    </script>
+    <style>
+        #divPartialContent {
+            margin-top: 30px;
+        }
+    </style>
+</body>
+</html>
+

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "LabAccess - Transaction Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    var reportGenerationPageURL = "@Url.Content("~/TransactionReport/GenerateTransaction")";
+    var TransactionDownloadURL = "@Url.Content("~/TransactionReport/ExportReport")";
+    var getTransactionListURL = "@Url.Content("~/TransactionReport/GetTransactionList")";
+    LoadPartial(reportGenerationPageURL, "divPartialContent");
+
+</script>
+
+<div id="divPartialContent">
+
+</div>
+
+

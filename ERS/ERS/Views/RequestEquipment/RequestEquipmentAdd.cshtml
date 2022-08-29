@@ -1,0 +1,276 @@
+﻿
+@model ERSEntity.RequestsEntity
+@{
+    Layout = null;
+}
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+<div id="divErrorMessage"></div>
+
+<div class="wrap-contact100">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRequestEquipment" }))
+    {
+
+        var _list = ViewBag.QuantityAvailableForEachItem;
+        var allRequestDetailsList = (List<ERSEntity.RequestDetailsEntity>)ViewBag.AllRequestDetailsList;
+
+        <table id="debug-table" class="table table-responsive" style="display: none">
+        </table>
+        <form class="contact100-form">
+            <span class="contact100-form-title" style="text-transform: uppercase">
+                Add Equipment Request
+            </span>
+
+            <div class="label-category">Request Details</div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Start Date and Time</span><span style="color:red"> *</span><span class="error">Required</span>
+                <input type="text" id="start-time" class="input100 start-time" placeholder="Select date and time" autocomplete="off" inputmode="none" onkeypress="return false;" onkeydown="return false;" onkeyup="return false" />
+                <span class="focus-input100"></span>
+                @*<span class="reset-dates" title="Reset Date"><i class='bx bxs-x-circle'></i></span>*@
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">End Date and Time</span><span style="color:red"> *</span><span class="error">Required</span>
+                <input type="text" id="end-time" class="input100 end-time" placeholder="Select date and time" autocomplete="off" inputmode="none" disabled onkeypress="return false;" onkeydown="return false;" onkeyup="return false" />
+                <span class="focus-input100"></span>
+                @*<span class="reset-dates" title="Reset Date" style="visibility: hidden"><i class='bx bxs-x-circle'></i></span>*@
+            </div>
+
+
+            @*<div class="wrap-input100 validate-input">
+                <span class="label-input100">Borrow Date</span><span style="color:red"> *</span><span class="error">Required</span>
+                <input type="text" id="selected-date" class="input100" placeholder="Select borrow date" autocomplete="off" inputmode="none" onkeypress="return false;" onkeydown="return false;" onkeyup="return false" />
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Start Time</span><span style="color:red"> *</span><span class="error">Required</span>
+                <input type="text" id="first-time" class="input100" placeholder="Select starting time" autocomplete="off" inputmode="none" onkeypress="return false;" onkeydown="return false;" onkeyup="return false" disabled />
+                <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">End Time</span><span style="color:red"> *</span><span class="error">Required</span>
+                <input type="text" id="second-time" class="input100" placeholder="Select ending time" autocomplete="off" inputmode="none" onkeypress="return false;" onkeydown="return false;" onkeyup="return false" disabled />
+                <span class="focus-input100"></span>
+            </div>*@
+
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100">Remarks</span>
+                <input id="description" class="input100" placeholder="Enter your message here..." autocomplete="off" />
+                <span class="focus-input100"></span>
+                <div class="hoverable-window">
+                    <i class="bx bxs-up-arrow"></i>
+                    <div>
+                        You may add a message here to the lab personnel regarding your request<br />
+                    </div>
+                </div>
+            </div>
+
+            <div class="spinner">
+                <img src="~/Content/Images/spinner.svg" class="spinner-logo" />
+                <div class="loading-message">Retrieving available equipments...</div>
+            </div>
+
+            <div class="label-category label-category-list" style="margin-top: 40px; visibility: hidden">Request Equipment Items</div>
+            <div class="orderItems" style="display: none;">
+                <table class="table table-responsive" id="orderdetailsItems">
+                    @{
+                        int indexOfForEach = 0;
+                    }
+                    @foreach (SelectListItem item in (IEnumerable<SelectListItem>)ViewBag.EquipmentCategory)
+                    {
+
+                        <tr class="checkbox-table">
+                            <td class="td-checkbox" style="width: 50px;">
+                                <input type="checkbox" value="@item.Value" class="checkbox-request" id="checkbox-request" />
+                            </td>
+
+                            <td class="td-name">
+                                <label>@Html.DisplayFor(m => item.Text)</label><br />
+                                <span style="color: var(--primary-color)" class="remaining-text remaining-textid-@item.Value">Available: @_list.QuantityForEach[indexOfForEach].Count</span><br />
+                                <span class="error"> * Required</span>
+                            </td>
+                            <td class="td-quanti" style="display: flex; padding-left: 30px !important">
+                                <button onclick="this.parentNode.querySelector('.quantity-checkbox').stepDown(); return false;" class="bx bx-minus" style="margin-right: 5px"></button>
+                                <input type="number" class="form-control quantity-checkbox equipcategory-@item.Value indexOfForEach-@indexOfForEach" id="quantity-checkbox" min="0" max="@_list.QuantityForEach[indexOfForEach].Count" onkeypress="return false;" inputmode="none" disabled readonly />
+                                <button onclick="this.parentNode.querySelector('.quantity-checkbox').stepUp(); return false;" class="plus bx bx-plus" style="margin-left: 5px"></button>
+
+                                <input type="number" class="max-equipment-quantity-@item.Value default-equipment-quantity-@indexOfForEach" value="@_list.QuantityForEach[indexOfForEach].Count" style="display:none">
+                                @{
+                                    indexOfForEach++;
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <input class="indexOfForEach" style="display: none;" value="@indexOfForEach">
+            </div>
+
+            <div id="divErrorMessage"></div>
+            <div style="text-align:center;" class="form-controls">
+                <button id="submit" class="btnAddPage" onclick="return false"><i class="glyphicon glyphicon-floppy-disk"></i> Submit</button>
+                <button id="return" class="btnAddPage btnSecondary" onclick="return false" style="margin-left: 5px"><i class='glyphicon glyphicon-repeat'></i> Return</button>
+            </div>
+        </form>
+    }
+    <div id="dialog-message" title="Request Sent" style="display: none">
+        <input id="qrcode-image" />
+        <input id="qrcode-link" />
+        <input id="qrcode-filename" />
+    </div>
+</div>
+
+<script src="~/Scripts/Page/RequestEquipment/jsRequestsAdd.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.css" />
+
+<style>
+    /*.bootstrap-datetimepicker-widget table td,
+    .bootstrap-datetimepicker-widget table th {
+        text-align: center;
+        border-radius: 0px;
+        color: #fff;
+    }*/
+    /*.bootstrap-datetimepicker-widget table td.day {
+        background-color: #D68060;
+    }
+    .bootstrap-datetimepicker-widget table td.today {
+        position: relative;
+        border-radius: 7px;
+        background: #FF7F32;
+    }*/
+    input[type="radio"], input[type="checkbox"]{
+        height: 20px;
+        width: 20px;
+    }
+    .bootstrap-datetimepicker-widget {
+        z-index: 9999 !important;
+    }
+    .bootstrap-datetimepicker-widget.dropdown-menu {
+        z-index: 9999 !important;
+    }
+    label {
+        font-family: 'Product Sans'
+    }
+    @@media screen and (min-width: 760px){
+        .wrap-contact100{
+            width: 550px !important
+        }
+    }
+    @@media screen and (max-width: 760px) {
+        .table-responsive{
+            border: none !important
+        }
+        .td-name{
+            width: 50px;
+            transform: translateX(-15px)
+        }
+        table tbody tr td {
+            padding: 0 !important
+        }
+    }
+    table{
+        border: none
+    }
+    table tbody tr td {
+        border: none !important;
+    }
+    .quantity-checkbox {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+        .quantity-checkbox::-webkit-inner-spin-button,
+        .quantity-checkbox::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+    .td-quanti input[type=number] {
+        font-family: sans-serif;
+        max-width: 5rem;
+        padding: .5rem;
+        border: none;
+        border-width: 0 2px;
+        font-size: 2rem;
+        height: 3rem;
+        font-weight: bold;
+        text-align: center;
+        color: var(--primary-color);
+    }
+    .td-quanti button {
+        outline: none;
+        -webkit-appearance: none;
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: bold;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        width: 2.8rem;
+        height: 2.8rem;
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+        box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+        border-radius: 5px;
+        visibility: hidden;
+    }
+    .td-quanti button:hover {
+        color: black;
+        background-color: white;
+        transform: translateY(-1px);
+    }
+
+    span.error {
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+        font-weight: bold
+    }
+
+    tr.error {
+        background-color: rgba(255, 0, 0, 0.35);
+    }
+
+    .td-category, .td-quantity {
+        visibility: hidden;
+    }
+    .qrcode-popout .ui-dialog-titlebar-close {
+        display: none
+    }
+
+    .qrcode-popout{
+        margin: 0 auto;
+    }
+    .modal-content {
+        margin: 0 7%;
+    }
+
+    .modal-header {
+        text-align: center;
+        font-family: 'Product Sans';
+        padding: 15px 0 !important;
+        color: var(--primary-color);
+    }
+
+    .modal-body-logo {
+        text-align: center;
+        color: var(--primary-color);
+        width: 200px;
+        margin: 0 auto;
+    }
+
+    .modal-body {
+        text-align: center;
+        font-family: 'Product Sans' !important;
+    }
+
+    .modal-footer {
+        text-align: center !important;
+    }
+
+    .btnRed, .btnGray {
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    }
+
+    .btnRed {
+        background: var(--primary-color) !important;
+    }
+</style>
